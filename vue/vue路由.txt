@@ -1,0 +1,157 @@
+	路由的类
+routes: [
+	{path: '/login', componment: login}
+]
+linkActiveClass: 'active'//高亮显示的类
+
+后端路由：监听网络请求，根据请求处理相关业务逻辑，将数据响应带客户端
+前端路由： 监听浏览器的hash值的变化，根据hash的切换展示不同的组件，使用前端路由书写的页面都叫做单页面(spa)
+
+
+import VueRouter from 'vue-router'
+Vue.use(VueRouter)
+在vue中使用路由是需要先引入router
+
+路由的运用
+ //1.创建模板
+//2.创建路由
+//3.在vue实例挂在实例
+4. 应用模板 
+5.对应去响应的页面 <router-link to="info"> 一首歌的名字</router-link>
+var login = {
+         template: '<h1>登录页面</h1>'
+        }
+
+	var routerObj = new VueRouter({
+	routes: [
+	{path: '/login', componment: login}
+]
+})
+还要在Vue实例上写入router: routerObj, 
+
+redirect: 重定向 路径
+{path: '/', redirect: '/login'}
+
+路由的高亮
+router-link-active 在样式中直接设置(路由模板自己奢姿的即为选中的时候特有的类) 
+
+在路由中这只特有的类 
+ linkActiveClass : "my"  这是选中时候的 并且可以重新定义类名
+还可以自定义类名 在路由实例中定义
+linkActiveClass: '自定义的类名'
+
+路由传参 query 
+在子组件实例中有this.$route  $route这个和$refs 样式都是实例自带的属性 其中$route 有一个path是路径("/login") 不带参数的 还有就只有参数的 以对象形式存在 可以this.$route.query.id
+
+路由的嵌套
+{path: '/account', component: account, children: 
+[{path: 'login', component: login}]
+}
+
+vue中的单项数据流，是指父组件给子组件传值数据，只能单项绑定
+子组件需要使用props重新再子组件中定义传递过来的数据，父组件传递的数据是只读的，不能对其进行修改。
+自上至下的传输方式叫做单项数据流
+
+使用多个组件同一页面
+ {path: '/', components: {
+                    'default': boxMain, default 默认的
+                    'left': boxLeft, 
+                    'right': boxRight
+                }}
+下面与上面一一对应
+<router-view ></router-view>
+<router-view name="left"></router-view>
+<router-view name="right"></router-view>
+
+query传参(查询字符串)
+	1.在url后面拼接类似以/login?name=huang&age=20
+	2.直接在模板中使用$route.query.id 来使用
+
+
+params传参(restful API)
+	1.在url后面传递参数 如/login/10
+	2.匹配路径也需更改  需要/login/:id
+	3.在模板页面使用需要{{$route.params.id}}
+	注意这里的$route 是没有r的
+
+
+监听事件
+watch事事件 可以用来监听路由地址参数的改变
+watch: {
+                '$route.path': function(newVal) {
+                    if(newVal == '/login') {
+                        console.log('欢迎来到登录页面')
+                    } else if (newVal == '/register') {
+                        console.log('欢迎来到注册页面')
+                    }
+                }
+            }
+
+当监听的类型是一个复杂类型的时候 需要
+watch: {
+                "user": {
+		handler: function(newval) {
+		console.log(newval) 这个是数据改变之后user
+ 		},
+		deep:true
+            }
+
+计算属性 computed : {
+	在computed中，可以定义一些属性，这些属性，叫做计算属性，计算属性的本质就是一个方法，只不过，我们在使用这些计算属性的时候 是吧他们的名称，直接当做属性来使用： 并不会吧计算属性，当做方法去调用
+	1.注意，只要是计算属性内部函数中的数据发生改变，就会重新计算这个属性值 
+	也就等于当计算属性内部值发生改变的时候 函数重新调用
+	在页面中可以直接使用：绑定使用或者使用插值表达式来使用
+	2.注意：计算属性的求值结果，会被缓存起来，方便下载使;如果 计算属性方法中，没有任何改变，则不会重新对计算属性求值()
+	finalName(){
+	return this.firstName + this.lastName
+}
+}
+
+watch 、computed methods 之间的对比
+	1.computed属性的结果会被缓存，从除非依赖的响应式属性变化才会重新计算，主要当做属性来使用
+	2.methods方法便是一个具体的造作，主要书写业务逻辑
+	3.watch一个对象，键是需要观察的表达式，值是对应的回调函数，主要某些待定数据的变化，从而进行某些具体业务逻辑操作，可以看做是computed和methods的结合体
+
+
+解决网页加载速度慢
+	可以使用合并、压缩、精灵图、图片的base64编码
+要处理错综复杂的依赖关系
+	可以使用之前学过的requireJS，也可以使用webpack解决各个包之间的复杂依赖关系
+
+
+	computed/data/props的区别
+	数据来源不同
+	computed数据的来源是依赖函数的返回值
+	
+	data数据的来源是定义时赋值或者在生命周期中赋初始值
+	
+	props数据的来源是通过父组件传递过来的
+
+
+	注意$route是路由参数对象，所有中的参数 params,query都属于它
+	$router 这个是个路由[导航对象]， 用他可以方便的使用js代码，实现路由的前进后退跳转
+
+	this.$router.push(`/home/xixi/${id}`)
+this.$router.push({pqth:'home/photoinfo/37'})
+
+	路由懒加载
+	const xixi = function(){
+	return import('./components/xixi.vue')}
+
+	路由守卫 只要在切换路由，都会执行该函数				
+	全局导航守卫 在路由跳转之前执行，会拦截路由的跳转，必须在回调函数中调用next 
+	调用next之后，导航会继续执行 	
+	boforeEach(function(to, from, next){})
+	next()调用	
+	to即将进入的路由
+	to.path === '/login'
+	from即将离开的/路由的页面
+
+	在私有路由中，可以设置beforeEnter:(to, from, netx)  => {next()}
+
+	axios请求拦截：拦截的是异步请求
+
+	路由拦截：路由拦截。拦截的是页面之间的跳转，比如按页面跳到b页面，如果被拦截则无法正常跳到b页面
+
+	router.options.routes[1].children.push({路由})	
+动态添加路由router.addRoutes(router.options.routes)

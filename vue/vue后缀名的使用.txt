@@ -1,0 +1,38 @@
+使用基本组件和render的区别
+
+var login = {
+	 template: '<h1>登录页面 </h1>',
+}
+
+render: function(createElements){
+	这里的形参createElements是一个方法 调用它，能够把指定的组件模板渲染为html 
+	return = createElements(login )
+	注意：这里return的结果，会 替代页面中el指定的那个容器
+}
+
+在ES6中有两种向外暴露成员的方法
+	1.export defalut只允许向外暴露一次
+	2.export 暴露成员只能使用{}的形式来接受，这种形式叫做【按需导出】 这个可以多次导出 可以暴露多个 这个暴露的是什么名字 就得用什么名字接收 但是可以使用as来起别名
+	还有就是在一个模块中可以使用export defalut 和export 
+
+	ES6可以使用 import ** from *** 来导入暴露的模块
+
+	在vue组件模块中 
+<style lang="less" scoped>
+	首先得设置lang属性可以写less 和scss 
+	还有就是在以vue结尾的样式中最好都要 scoped(只定义自己样式) 不定义就是定义全局的样式
+    
+</style>
+
+
+		1.动态生成的内容
+	在组件中使用v-html动态创建的DOM内容，不收scoped的样式影响，但是你依然可以使用深度选择器进行控制
+	注意 使用less和scss只能使用  .newsinfo /deep/ img 
+	不能使用.newsinfo >>> img  这样的格式在只能使用在css样式里面
+	
+	深度选择器的解释
+	scoped有作用域，深度作用选择器这个标识符相当于可以去掉scoped给当前标签添加的自定义属性   
+	就变成了普通的样式选择而不是属性选择器了
+
+
+

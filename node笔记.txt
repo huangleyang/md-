@@ -1,0 +1,380 @@
+Node.js
+	不是一门语言
+	不是库(jquery)、不是框架(vue)
+	是一个javascript运行时环境	
+	简单点来说就是Node.js可以解析和执行javascript代码
+	以前只有浏览器可以解析执行javaScript代码
+	也就是说现在的javaScript可以完全脱离浏览器来运行
+
+Node.js中的JavaScript
+	没有BOM、DOM
+	在Node这个JavaScript执行环境中为JavaScript提供一些服务器级别级别的操作api
+		例如文件读写
+		网络服务的构建
+		网络通信
+		http服务器
+		等处理。。。
+	Node.js的特性
+		event-driven事件驱动
+		non-blocking I/O model非阻塞IO模型(异步)
+		轻量和高效
+
+	构建Chrome的v8引擎之上  
+		代码只是具有特定格式的字符串而已
+		引擎可以认识它，引擎可以帮你去解析和执行
+		Google Chrome 的v8引擎是工认的解析执行JavaScript代码最快的
+		Node.js把 Google Chrome 的v8引擎移植了出来开发了一个独立的运行时环境
+
+	Node.js能干什么
+		Web 服务器后台
+		命令行工具
+			npm(node)
+			git(c语言)
+			hexo
+
+	预备知识
+		HTML
+		CSS	
+		JavaScript
+		简单的命令行操作
+
+	这门课能学得到什么
+		B/S编程模型
+
+
+
+
+Node中的JavaScript 是具有文件操作的能力
+	在node中如果想要尽心文件操作，就必须引入系统的意思
+	在fs 这个核心模块中，就提供了所有的文件操作相关的API
+
+	想要读取一个文件
+	使用require方法加载fs核心模块
+	var fs = require ("fs");
+	
+	调用fs中的API
+	fs.readFile("",function(error,data){})
+	读取文件第一个是读取文件的路径 第二个是回调函数
+		回调函数中有两个参数
+		成功时 
+			data 数据 
+			error null
+		失败时
+			data null
+			error 错误对象
+
+	写入文件
+	第一个参数是 文件路径
+	第二个参数是 文件内容
+	第三个参数是 回调函数
+		fs.writeFile("./data","nihao",function(error){})
+
+
+	node可以轻松的创建一个 Web 服务器
+	在Node中专门提供了一个核心模块:http	
+	http这个模板的职责就是帮你创建编写服务器的
+
+	1.加载http核心模块
+		var http = require("http")
+	2.使用http.createServer()方法创建一个web服务器
+		返回一个Server实例
+		var server = http.createServer()
+	3.服务器要干嘛
+		提供服务:对数据的服务
+		发请求
+		接受
+		处理请求
+		给个反馈
+		注册 request 请求事件
+		当客户端请求过来， 就会自动触发服务器的request请求事件，然后执行第二个参数 回调函数
+request请求事件处理函数，需要接受两个参数
+	1.request 请求对象
+		请求对象可以用来获取客户端的一些请求信息，例如路径
+	2.response 响应对象
+		响应对象可以用来给客户端发送消息
+		
+
+	server.on("request",function(request,response){console.log("收到客户端的请求了+request.url)
+response对象有一个方法可以 write可以给客户端发送响应数据
+	write可以使用多次 ，但最后一定要写end方法结束 否则客户端会一直等待
+	response.write("hello")
+	response.end();
+ 一般直接在end的同时发送数据
+	response.end("数据") 但是数据只能传递字符串和二进制 其余的都不可以  将数组或对象转化为字符串 JSON.stringify()
+})
+
+	4.绑定端口号，启动服务器
+	server.listen(3000,function(){console.log("服务器已启动，可以通过http://127.0.0.1:3000/来进行访问")})
+
+
+
+	核心模块
+	Node为javaScript提供了很多服务级别的API，这些API绝大多数都被包装到了一个具名的核心模块中了。 例如文件操作的fs核心模块 ，http服务构建的http模块，path路径操作模块 、os操作系统信息模块。。。
+
+	想要使用一个核心模块，就必须引用这个模块
+例如 var fs= require("fs") require加载 
+
+
+
+
+	简单模块
+	当在一个文件中 有使用require(路径)加载时 执行循序是同步进行的，且文件是相互独立的。不同个文件中不能调用不是自己文件的方法或者访问变量
+	好处 完全避免了记载执行多个文件时，变量名污染的问题
+		在Node中没有全局作用域，只有模块作用域
+		外部访问不到内部
+		内部也访问不到外部
+		可以省略后缀名
+		相对路径中的./不能省略 (省略之后会将相对路径当做核心模块来加载)
+	既然是模块作用域，那么如何让模块与模块之间进行通信呢
+	当我们要使用另一个模块中的方法时怎么来使用呢
+	
+	require方法有两个作用
+		1.加载文件模块并执行里面的代码
+		2.拿到被加载文件模块导出的接口对象
+		【】在每个文件模块中都提供了一个接口对象：exports它默认是一个空对象
+
+	你要做的就是把所有需要被外部访问的成员添加到exports中
+例如  exports.foo = "hello"
+      exports.add = function(x,y){
+return x+y}
+
+使用方法是在访问文件中 声明一个变量接受exports这个对象 在调用其 方法
+例如	var bExports = require('./b')
+	console.log(bExports.foo) //hello
+	console.log(bExports.add(10,30)) //40
+
+
+		端口号(0-65536)之间
+	所有联网的程序都需要进行网络通信
+	计算机中只有一个物理网卡，而且同一局域网中，网卡的地址必须是唯一的。
+	网卡是通过唯一的IP地址来定位的
+
+	IP地址用来定位计算机
+	端口号用来定位具体的应用程序(所有需要联网通信的软件必须具有端口号)
+	所有需要联网必须的应用程序都会占用一个端口号
+	默认的http服务 80 
+	可以开启多个服务 但是得确保占用的是不同的端口号
+	
+	解决中文解析问题
+	res.setHeader('Content-Type','text/plain';charset=utf-8)
+	在http协议中 Content-Type就是用来告知对方给你发送编码的数据是什么类型
+
+
+	文本类型是text/plain
+	html类型是text/html
+	图片类型是image/jpeg (这个不需要加utf-8)
+	图片不需要指定编码，因为我们常说的编码一般指的是:字符编码
+	一般只为字符数据才指定编码
+
+	return有两个作用
+	1.方法返回值
+	2组织代码的继续执行
+	其中index return 等于return index
+例如	;(function(){
+    return console.log(1) 
+    console.log(2)
+	//结果是 1
+	})()
+
+
+	怎么在Node中使用模板引擎
+	1.安装npm install art-template
+	2.在需要使用的文件中引用art-template 
+		使用require方法加载
+		art-template 就是你下载包的名字
+	3.查看文档 使用模板引擎
+	
+	1.读取使用{{name}} 书写的页面	
+	2.模板引擎渲染， 在发送给客户端之前，我在服务器端就已经吧index.html渲染处理了
+	var 渲染结果 = template.render（模板引擎字符串，{解析替换掉 对象}）
+
+	npm  
+	下载包的时候需要 --save
+	package.json
+	我们每一个项目都要生成一个这样的文件package.json
+	但是这个文件不需要我们自己写 可以自动生成
+	npm init 的方式自动生成
+
+	建议每个项目的根目录下都有一个package.json文件
+	建议执行 npm install 包名的时候加上 --save这个选项，莫得是用来保存依赖项
+	如果你的node_modules删除了都不用担心 可以直接输入
+npm install
+	
+
+
+		常用npm命令
+	npm init
+		npm init-y可以跳过向导 快速生成 
+	npm install
+	npm install 包名 下载
+	npm install  --save 包名 简写 npm i -S 包名
+		下载并保存依赖项(package.json文件中的dependencies选项)
+	npm uninstall 包名
+		只删除 如果有依赖项会依然保存
+	npm uninstall --save 包名
+		删除 依赖项也删除
+
+	npm help 
+		查看使用帮助
+
+ 	npm怎么跳墙  $ npm install -g cnpm --registry=https://registry.npm.taobao.org
+	如果你不想用cnpm又想不跳墙可以设置
+		npm config set registry 
+https://registry.npm.taobao.org
+
+
+一个模块作用域中，向外暴露私有成员时，永远module.exports为准
+
+
+模块成员 
+	核心模块 node提供的例如fs。。。
+	第三方模块 网上下载的
+
+	用户自定义模块 用户自己写的
+
+这个框就代表calc这么一层目录。表示是一个包的目录
+
+package.json
+	name 包名
+	version 版本号
+	main 指定了包的入口文件
+	bin 目录存放 二进制文件
+	lib 目录 所有的js放到lib中
+	doc文档目录
+	text 目录 测试文件
+	REANE.md 使用说明
+
+安装全局包
+npm install 包名字 -g //演示 npm install i5ting_toc -g
+//这个包的作用可以将.md文件转为html文件 i5ting_toc -f 文件.md -o
+-o自动在浏览器中打开
+删除全局包
+npm uninstall 包名字 -g
+
+安装局部包
+新建项目目录
+在文件中 shift加鼠标右键
+执行 npm init -y 这个命令是初始化一个package.json包文件
+	这个是帮助你记录安装了哪一些包..
+npm install 包名字 --save或 -S 下载包到线上环境 dependencies
+npm install 包名字 --save-d 或者-D下载包到测试环境devDependencies
+
+改变网速的可以使用淘宝镜像
+
+也可以yarn工具下载
+2.npm install yarn -g
+yarn init 初始化一个包
+yarn add 包名 / yarn remove 包名
+
+res.sendFile()
+用法1 res.sendFile(path.join(__dirname,'./view/index.html'))
+只有一个参数 只能写绝对路径
+
+用法2 res.sendFile('./view/movie.html',{root:__dirname})
+有两个参数 第一个是相对路径 第二个是绝对路径 写法固定
+
+app.use()注册中间件
+express.static()设置中间件 括号里面写需要挂在的目录
+例子 app.use(express.static('./my'))
+
+也可以写两个参数
+app.use('虚拟目录'，express.static('./my'))
+写了两个参数就必须在输入路径前加上虚拟目录
+
+
+			中间件 先到先得（当冲突的时候）
+应用级别的中间件
+应用中间件绑定到app对象使用app.use（ ）和app.METHOD()
+app.set 
+
+路由级别的中间件
+和应用中间件一样，只是它绑定的对象是express.Router()
+
+错误处理中间件
+
+有四个参数 循序不可变 app.use(function (err, req, res, next))
+
+
+内置中间件 express.static
+
+第三方中间件
+需要下载
+
+node中特有的新增方法
+const user = {name: '我', age: 18, gender: '男'}
+const sqlStr2 = 'insert into uesrs set ?'
+conn.query(sqlStr2,user, (err,res) => {
+
+})
+优先在缓存中下载  引用多个模板的时候只会执行一次模板中的内容
+因为会优先在缓存中查找，看有没有这样的一个模块
+
+当引入的文件省略后缀名./index的时候会严格按照 index  index.js index.json index.node 的循序在查找
+
+服务器可以通过req.query属性，获取到客户端提交到服务器的查询参数
+
+在客户端获取url的值 感觉不科学你怎么知道传几个值 就算是客户的登录那怎么能以url的方法传参呢  只传一个感觉还可以
+
+获取时需要以
+app.get("/user/:id/:name")设置其路径
+在使用req.params来获取其id值和name的值 (以对象的形式存在)
+
+
+从POST表单中获取提交表单
+使用body-parser来解析表单
+安装npm i body-parser -S
+导入 const bodyParser = require('body-parser')
+
+请求是x-www-form-urlencodedj
+注册中间件 app.use(bodyParser.urlencoded({ extended: false }))
+使用解析数据 req.body
+
+当请求是 application/json
+需要使用 app.use(bodyParser.json())
+
+跨域问题
+1.JSONP的原理是利用的script标签天然的跨域特性 
+JSONP发送的不是Ajax请求
+不支持Post请求 缺点
+2.CORS中文意思是跨域资源共享，需要在服务器端进行CORS配置 这个支持post请求
+CORS发送的是真正的Ajax求情 
+CORS只在Ajax的跨域安装cors的模块即可
+3.在Node中只需要
+
+字符串有一个新方法 叫做padStart（长度，要填充的长度）
+
+
+自动生成时间模块
+const moment = require('moment')
+
+使用 const wo = moment().format('YYYY-MM-DD HH:mm:ss')
+
+循环挂载页面
+let fs = require('fs')
+let path = require('path')
+
+//fs.readdir读取目录
+fs.readdir(path.join(__dirname,'./router'), (err, data) => {
+    if (err) return console.log('读取路由失败')
+    data.forEach(item => {
+        const router = require(path.join(__dirname, './router', item)) 
+        app.use(router) 
+    })
+})
+
+
+mvc:就是分层开发的思想
+把复杂的业务处理，分为职能单一的小模块 各个模块之间看似相互独立。其实各自有依赖关系
+
+独立又有依赖关系
+MVC好处：保证了模块只能的单一性；方便程序的开发，维护，拓展
+
+M表示Model是数据库层 V是view，是页面视图层； C表示Controller【重点】，是业务处理层
+
+
+cookie设置cookie
+'Set-Cookie': ['isvisit=yes','test=ook']
+
+在服务器端使用req.headers来获取请求头中的cookie值
+
+使用res.redirect('/') 使用res.redirect方法， 可以让客户端重新访问指定的页面

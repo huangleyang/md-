@@ -1,0 +1,694 @@
+  php
+复习
+一.编程三要素
+1.数据：变量（常量） 数据类型
+2.流程控制
+3.函数
+二 .BOM与DOM
+BOM：window 
+DOM ：document
+三.事件与事件对象
+四.面向对象与高级
+
+什么是WEB服务器
+服务器 指的就是一台安装特定的软件的计算机，用于专门提供特定的服务。
+按照服务器的不同又划分为 ：web服务器 数据库服务器 文件服务器
+客户端 指的是在一次服务过程中使用这个服务的设备（网络端点）。
+目前咱们最常见的就是
+
+c/s客户访问不同的服务器需要安装软件
+b/s浏览器 浏览器只要输入域名或地址就可以访问的
+
+地址
+127.0.0.1 本机回环地址
+192.168.x.x开头为局域网的地址
+
+一个域名只能绑定一个ip地址
+一个ip地址可以绑定多个域名
+DNS域名解析系统 把域名解析成ip返回给客户端
+
+
+本地hosts文件
+先访问本地的缓存 没有 再去DNS中去请求ip
+
+
+端口
+web服务 80
+mysql数据库服务端口：3306
+URL 统一资源定位符 网络地址的格式
+
+phpStudy
+集成环境 服务器软件Apache ，服务端开发语言php的执行环境，以及数据库软件MySQL 
+
+
+php输出语句
+<?php
+	echo 'i love you'
+?>
+
+php所用 .php结尾。、
+print_r 他也能输出字符串，可以一个用来输出数组
+var_dump("")  这个清楚一点
+
+在php结构样式(<?php ?>)不能写html样式
+同样不能再php外面书写 php样式
+与html混编
+
+
+
+
+再php代码中最后必须要加分号 除非是最后一行 否则会报错
+
+
+
+isset（）判断变量是否存在 输出是就是bool（true）或bool（false）
+存在就是1 不存在就是false 是null 看不到
+empty（）判断变量是否为空 空值由0‘’0 ‘0’null false array（）
+如果括号里面的值是控制里面的一种就返回true 	区域的是false
+unset（）删除变量
+	1.如果删除一个变量，那么变量的值会变null
+	2.可以同时删除多个变量 逗号隔开
+	3.如果在函数中删除全局变量，那么并不会真正的将全局变量删除
+
+
+
+1.变量
+所有的变量的声明必须用$
+区分大小写
+
+
+变量名的组成由数字，字母，下划线
+这里无需声明类型  php在系统中会自动判断
+在php如果声明变量没有赋值，就null 不会报错 
+
+
+2.双引号字符串和单引号字符串的区别
+
+
+PHP的数据类型
+基本数据类型 字符串string 整型int 浮点型float boolean布尔型
+复合类型 array数组   object对象
+特殊数据类型 null
+is_string()判断是不是字符串类型
+is_bool()判断是不是布尔
+
+以此类推
+gettype 获取数据类型 在php中获取数据类型的方法
+ 
+
+php区分单双引号的
+字符串链接符用 .
+
+function foo(){
+console.log(this)
+}
+1，函数模式
+foo()
+var o  ={}
+o.fn = foo
+2.方法模式
+o.fn()
+foo()
+3.构造函数模式
+var f= new foo()
+4上下文模式
+foo.call(null) => foo()
+foo.call(o) => o.foo()
+foo.apply(o)
+
+''的特点
+1.它不能解析变量，如果在''中
+2.它支持转义，如\\  \'
+echo '我的\\名字\'叫$name';
+
+""的特点：
+1.""中可以来解析变量。
+a.a.如果在变量名后面紧接着其它的合法字符(中文，a-z A-Z 0-9 _),那么系统会将整个变量及后面的字符串当成一个变量进行解析
+b.如果需要在这种情况下正确的解析变量，可以将变量包含在{}中
+2.支持的转义字符：\" \\ \n \t \$
+
+
+索引数组：通过索引操作数组
+创建方式：array（添加数组的成员，成员类型不作要求）[数组成员]
+可以$arr = array()和    $arr = [];
+遍历和for循环一样
+php中用count(数组对象)来获取数组的长度
+
+关联数组键值对的方式来描述数组的
+语法array($key=>$value,$key=>$value)
+获取关联数组中成员：通过key来获取数组中的成员 
+本质上索引数组本质也是关联数组 系统自动转换的 
+遍历用foreach
+foreach(数组对象 as 键 => 值){
+	echo $key.':'.$value.'<br>';
+}
+
+
+Es5中新增的方法遍历
+forEach（function（value,index）{
+}）
+jqury中遍历
+$each(arr,function(index,value) {
+})
+
+
+混合数组：综合了索引数组和关联的特点
+特点：
+	1.如果添加元素的时间设置key，那么就没有索引
+	2.如果没有设置key ，那么系统自动生成索引
+	3.下载索引和key不会相互影响。如果没有指定key，那么索引会取到以前的最大的索引下标加1 
+
+
+
+可以通过[]创建数组
+	1.判断当前数组是否已经存在，如果不存在则先创建，再将元素添加到数组第一个元素位置
+	2.如果数组已经存在，那么就将当前元素添加到数组中--追加
+
+
+说明与数组相关的常用函数
+count():获取指定数组的长度
+unset():它也可以用来删除数组中的某个成员。但是删除了数组的元素之后，并不会对数组元素的索引产生影响，元素还会保留之前的索引。意味着它只是删除了索引位置的元素，并没有动态的改变数组的长度。长度会改变
+
+
+ 类型转换大致可以分为两种：自动转换  强制类型转换
+语法：(array)$str 
+
+
++只能是算术运算符，系统会自动的将+两边的变量转换为数组，如果可以转换，就进行转换，否则返回这个数据类型的默认值  int >0 object > null bool>false float:0.0
+ 在php中字符串连接符使用.
+
+php中函数名不区分大小写
+在php中无法访问函数外部的成员
+想在内部访问外部的成员要用global 名称
+并且在引用的同时不能赋值，如果想赋值需要换一下行
+在函数内部谢盖了函数外部的值，那么这个修改会影响后面的使用
+
+$GLOBALS-引用全局作用域中的可用的全部变量
+可以直接引用
+语法：$GLOBALS[a] 可以直接访问a的值
+也可以用他来定义超全局变量
+语法： $GLOBALS[a] = 值
+
+
+定义常量还可以const PI = 3.14;
+常量 define 这是一个函数
+定义常量的语法define(常量名称，常量值，标记是否对对大小写敏感 默认为敏感 false)
+一般常量的名称使用大写的 
+使用常量和变量没有区别，只是前面不需要加$而已。
+
+
+php中的魔术常量的使用：魔术常量的意思是指这个常量值会根据不同的使用场合返回不同的值
+_LINE_:可以获取当前的代码行
+_FILE_:它可以获取当前文件的路径： 目录+文件名
+_DIR_：他可以获取当前文件的目录
+_FUNCTION_: 它可以获取当前魔术常量所在的函数
+
+
+载入文件
+include:1.如果文件载入失败，也不会影响后续代码的执行  2.如果重复载入文件那么被载入的文件的代码会真正的重复执行
+include_once:1.如果文件载入失败，也不会影响后续代码的执行 2.如果重复载入文件，最终也只会载入一次
+
+
+require：1.如果文件载入失败，那么后续不再执行  2.如果重复载入文件那么被载入的文件的代码会真正的重复执行
+require_once:1.如果文件载入失败，那么后续不再执行 2.如果重复载入文件，最终也只会载入一次
+
+
+转义中文的代码
+header(“content-type:text/html;charset=utf8”);
+一：客户端
+    1、表单的提交的方式设置为post
+    2.需要为表单添加enctype:multipart/form-data
+
+
+二：服务器端：
+    1.$_FILES:可以记录上传文件的相关信息
+    2.使用move_uploaded_file实现文件的移动 
+
+三：补充
+    1.判断用户进行了提交:empty
+    2.限制文件类型
+        a.为表单元素添加属性 accept=".jpg,.png"
+        b.可以在服务器进行判断
+            $type = $_FILES["myfile"]["type"];
+            // strpos(源字符串，搜索字符串):可以获取指定字符串在源字符串中第一次出现的索引值，索引从0开始
+            if(strpos($type,"image/") === 0){
+    3.设置合理的文件名称：
+        1.生成一个随机的文件名称
+            $filename = $_FILES["myfile"]["name"];
+            // 获取当前文件的扩展名 strrchr(源字符串，指定搜索的字符)
+            $extension = strrchr($filename,".");
+            // 生成一个随机的文件名称：获取到一个唯一值
+            $myname = time().rand(1000,9999).$extension;
+            move_uploaded_file($_FILES["myfile"]["tmp_name"],"./upload/".$myname); 
+    4.限制文件上传大小的修改
+        1.upload_max_filesize:这是服务器对上传的文件大小做了限制，默认为2mb,你可以修改这个值，但是要记得重启服务器
+        2.服务器对每一次post请求传递的数据做了限制，默认为8mb,可以在php.ini配置文件中修改post_max_size属性值
+
+    5.同时上传多个文件
+        1.设置多文件选择，但是它只是能够选择多个文件，传递给服务器的文件数据只是后面的那个文件。如果在设置了multiple属性的时候，需要传递多个文件给服务器，那么只需要在name属性值后面添加[]
+        2.也可以添加多个表单元素，同时也需要在名称后面添加[]
+            <input type="file" name="myfile[]">
+            <input type="file" name="myfile[]">
+
+文件传输type=file  accept只显示什么语法accept = ".gif"
+
+phpAPI
+和js差不多 有许多内置函数，不是每一个函数都可以默认使用的，有些需要安装或者额外启用。
+strlen():可以获取指定的字符串的长度
+特点：strlen无法正确的处理中文字符(本质上说是不能处理宽字符集,所谓宽字符集就是指php默认不支持的字符如中文，日文。。。)
+GB2312:每个字符占据2个字节
+UIF-8:每个字节占据3个字节
+
+获取php环境中的默认编码
+mb_internal_encoding();//UTF-8
+mb_strlen():没事设置编码就使用当前php的默认编码
+特点默认不能用
+php-ini>extension = php_mbstring.dll.打开这个应用否则无法引用
+
+
+时间戳time();
+格式化日期:date()
+strtotime()将有格式的时间字符串转换为时间戳
+获取时间戳 
+
+text/html MIME类型
+header("Content-Type:image/jpeg");设置当前的返回值是一个图片
+
+
+返回的数据类型是 字符串
+file_get_contents: 读取文件内容，如果读取成功，就会返回一个字符串类型的值，如果读取失败，就会返回false。
+$file_put_contents:将指定的内容写入到文件，同时返回当前成功写入的字符数量
+
+1.php标记
+    <?php   
+        1.写在这个结构内的代码才会以php语法解析
+        2.写在这个结构外的代码会原样返回
+    ?>
+2、输出内容的方式
+    echo:输出多个字符串
+    print:输出一个字符串值
+    print_r:可以输出复杂数据类型，如数组，以键值对的形式输出
+    var_dump:可以输出复杂数据类型，如数组，以键值对的形式输出，还可以输出数据的长度
+
+3.字符串
+    '':不能解析变量，会将变量当成普通字符串处理  \\ \'
+    "":能解析变量 \" \t \n \r \$
+
+4.数组：
+    创建方式：
+        $arr = array()
+        $arr = []
+        $arr[] = value; //如果数组不存在则可以自动的创建一个数组，并将当前值添加到数组中，如果存在则添加数据到数组
+    数组的类型：
+        索引数组：不人为设置key $arr = array(1,2,3,4);
+        关联数组：人为设置key和value  $arr = array("name"=>"jack")
+        混合数组：$arr= array(1,2,3,"name"=>"jack",4)
+        二维数组：数据的值本身又是一个数组
+            $arr = array(
+                array(
+                    "name"=>"jack",
+                    "age"=>20
+                ),
+                array()
+            );
+    数组遍历：for  | foreach
+    for($i =0;$i<count(数组);$i++){}
+    foreach(需要遍历的数组对象 as $key => $value){}
+
+5。变量作用域：函数内部默认不能使用函数外部所声明的成员，如果想使用，则：
+    1.使用global关键字
+    2.使用超全局变量$GLOBALS
+
+6.常量的定义和使用：
+    define(名称，值，false)
+
+7.载入其它文件：文件包含
+    include:如果载入失败，不会报错，后续代码会继续执行，它可以重复载入
+    include_once:如果载入失败，不会报错，后续代码会继续执行，它不会重复载入，只会真正的载入一次
+    require:如果载入失败，会报错，后续代码不会继续执行，它可以重复载入
+    require_once:如果载入失败，会报错，后续代码不会继续执行，它不可以重复载入
+
+8.常用API
+    文件操作：
+        file_get_contents:可以读取文件内容并返回
+        file_put_contents(文件路径，写入的内容，FILE_APPEND):可以将指定的字符串内容写入到文件，其中第三个参数FILE_APPEND可以实现文件内容的追加
+
+9.html混编
+    1.在<?php 在这个结构内部只能写符合php语法的代码 ?>
+    2.在<?php  ?>结构的代码会原样输出
+    3.混编实现方式
+        1.<?php echo '<p></p>' ?>
+        2.
+            <?php  if(){ ?>
+                <p></p>
+            <php }?>
+
+explode 切割字符串让其变为数组
+语法：explode(“需要在哪里切割”，需要切割的字符)
+
+
+josn的特点 
+1.里面不能写注释
+2.有两种格式：[] {}
+3.json中的键一定是双引号"";
+
+json_encode将php数组转化为json字符串
+json_decode将json字符串转化为jphp数组或者对象
+
+
+GET方式提交数据的特点
+传递快 安全性低 数据量小
+POST 安全性高 数据量大
+
+action:设置提交数据的处理页面。就是用来设置提交到的目的地址
+method：如果没有设置默认为get
+get：一般用来获取数据：特点，参数会在url地址拼接
+post：一般用来发送数据到服务器
+则必须为表单元素设置name属性
+输出格式化echo "<pre>"
+
+
+
+
+
+
+关于字符串的一些api
+strlen() 字符串的长度
+str_replace(被替换的，替换的，更改的字符串) 区分大小写
+str_repeat(重复的字符串，重复的次数) 重复的意思
+ucfirst()首字母大写
+trim(字符串)去除字符串最前面和最后面的空格（中间的去不掉）
+想去除中间的 正则 \s
+explode(分隔符，目标字符串)；
+implode(连接的字符，目标是数组)
+strpos(目标字符串，要查找的字符串) 返回下标 只返回一个值
+substr(目标字符串,起始下标[])
+substr($str,strpos($str,"r"))
+strchr(目标字节，要查找的字符串) 截取 从查找的字符到最
+从左往右
+还有一个从右往左的strrchr 一般用来获取后缀名
+
+关于数组的api
+in_array(目标元素 ，目标数组)判断 返回布尔类型bool(true)
+
+$_SERVER 获取服务器接收请求之后的数据
+可以使用$_SERVER["REQUEST_METHOD"]等不等于“POST”;默认GET
+
+
+$_GET 获取get方式发送的请求
+$_POST 获取post方式发送的请求
+$_REQUEST 可以获取get请求和post请求 但是他的循序是先获取get请求后获取post请求 所有有重名的请求是post会替换掉get请求
+$_SERVER 里面有一个PHP_SELF 可以获取当前文件的路径
+
+任何吧表单元素想要以默认的方式来收集数据都要添加name属性
+系统会自动收集当前表单元素的value值
+
+1.默认情况下，回收机当前被选择的单选按钮的值，只不过这个值默认为on
+2.我们也可以为单选按钮设置value，收集的时候就可以用value属性来提交了
+复选框需要传递多个值只需要在相同的name的值后面加[];
+
+下拉列表的格式
+<select><option></option></select>
+在下拉列表中没有设置value值会传递被选择的innerText的值
+但是设置了就会传递value  一般value以1，2,3的形式设置
+
+
+php中上传文件必须是post
+在上传的时候必须在表单设置enctype 属性
+application/x-www-form-urlencoded:将参数编码为键值对的格式，这是标准模式
+multipart/form-data：它是专门用来处理特殊数据的。如文件
+accept 语法".jpg,.png"
+strpos (源字节，搜索字符节)可以获取指定字符串在源字节串中第一个索引从0开始
+
+
+1.如果在php中结构中直接写retuen ，那么当运行到retuen时候，整个php文件的执行就结束
+2.如果在方法中写return，那么这个return只能结束这个方法的执行
+move_uploaded_file(源文件的全路径，目标文件的全路径)
+
+HTTP协议
+端与端之间的进行通信 http协议
+约定形式
+建立链接 三次握手
+1客户端向服务器发送一个链接请求
+2服务器向客户端返回一个确认信息
+3客户端将请求及这个确认信息发送服务器
+
+
+设置当前请求结束之后，连接是否断开 
+
+
+
+keep-alive（保持） close（断开）
+
+
+设置相应文件类型
+header("Content-Tpye:text/css")
+使用函数发送重定向的指向，让浏览器进进重定向的操作
+header("Location:01-form-get.php")
+在指定的时间之后跳转
+header("refresh:3;url=01-form-get.php")
+
+getallheaders()["属性名"]； 获取这个属性的属性值
+
+
+通过header函数设置响应头：就是告诉浏览器拿到数据之后如何进行解析处理
+header("Content-Type:text/css");
+echo 'body{background:red}'
+echo '<script>location.href=""</script>';
+使用header函数发送重定向的指定，让浏览器进行重定向的操作
+header("Location:01-form-get.php");
+在指定的时间之后跳转
+header("refresh:3;url=01-form-get.php");
+实现当前页面的自动下载
+header("Content-Type:application/octet-stream");
+实现自动下载，同时可以设置下载后的文件名称
+header("Content-Disposition:attachment;filename=temp.php");
+获取请求报文数据
+print_r(getallheaders());
+
+
+获取url中的各部分
+    print_r(parse_url($refer));
+    $host = parse_url($refer)["host"];
+    if($host === "127.0.0.2"){
+        echo '我们是一家人';
+    }else{
+        echo '不是一家人，不响应';
+    }
+php中的跳转是header("location:地址")
+延时跳转header（"refresh:3;url = 地址"）
+js发送get请求 跳转
+location.href =""; href是一个属性
+
+
+post请求必须写 enctype="multipart/form-data"
+
+
+cookie原理分析
+一共有四个步骤
+1.客户端发送一个http请求到服务器
+2.服务器发送一个http响应到客户端，其中包含set-Cookie头部
+3客户端发送一个http请求到客户端，其中包含cookie头部
+4.服务器端发送一个http响应到客户端
+cookie
+语法：setcookie(name[,value,expire,path,domain])
+意思就是保持之前已有的状态 
+因为http 是不保持状态的 坏处 比如登录了不记录了 下次要用还要登陆（要是在你已经登录下的操作都要重新登录 例如如何管理自己的数据 进空间 修改密码 麻烦）
+
+
+第一个值 属性名
+第二个值 属性值 键值对样式存在
+第三个参数有效期 单位是秒 他的时间参照是1970-1-1所以可以用time（方法）
+如果不写的话一般就是在页面关闭的清除cookie但也可以永久存储
+永久存储
+语法：setcookie("username","jack",PHP_INT_MAX);
+第四个参数path 设置访问权限 
+1 设置目录为父级目录，子目录也能访问
+2 设置目录为子级目录。父级不能访问
+/就是代表整站都能访问
+
+
+cookie的删除 等于空字符串 或者不写
+但是你是怎么创建就应该怎么删除，方法的参数一一对应
+
+cookie的缺点
+数据不安全可以在页面中的痕迹中找到
+数据类型只能是字符串
+文件的大小有容量限制4kb
+
+
+session 啥都可以用 但是他是存储在服务端的
+session 开启需要写 session_start();
+$_SESSION["user"] = array (
+"name"=>"jack","age"=>20
+)
+删除session 
+unset  $SESSEION =[]
+session_destroy
+总结
+因为http无一种无状态的 不记录任何文件 所以得引用一个第三方的方法cookie 用来记录用户登录的记录
+cookie是客户端请求后服务器在响应头中返回给客户的真是数据
+cookie是记录在客户端的 然后客户端再次请求数据时吧cookie连同一起带过去（在请求头中）然后服务器就知道客户已经登录过了
+就不需要重新登录了 
+缺点 不安全因为存储在 客户端 用户可以随意改变
+传输数据容量小4kb 而且只能存储字符串（因为他是以键值对的样式进行存储的）
+
+session	也是一种记录状态的方式 但是它可以传输大量的数据
+可以存储任何类型  同时它也是存储在服务端的 安全
+语法叫麻烦
+必须写 seeeion_start
+$_SESSION["属性名"]= array(
+"name"=>"huang"
+)
+客户请求之后 服务器返回一个地址 在反应头中返回
+然后地址对应着服务器中的一块区域 使用时直接回调用服务端的数据 再次访问
+
+
+MySQL
+查询语句的语法 select *全部(可以选择某一个直接写属性名)  form表列表 where 条件
+查询可以返回一个结构集(表)
+增添的语法 insert into 表名 values(值一。值二...)
+如果有标识列，那么标识列一般可以给null值，如果给空值 系统自动会自动生成
+指定字符串
+insert into mytable(name,age,gender) value(null,"lili",18,"男")
+对于介意为null的值可以不赋值
+非空字段不赋值也不会报错 但是一定要赋值
+
+修改语法
+语法update 表名set 字段1=值一 where条件
+update mytable set age=18 where id =5
+（重要）条件可以用or或end来增加
+
+删除 语法 delete[from]表名 where 条件（重要）不能还原的
+where id in(4,5)范围4或者5 不是4到5
+增删改是返回受影响的行
+
+
+count();可以查询满足条件的记录数，无法对null值进行计算，会直接忽略null (一般查询全部写*号)
+语法 select count(*) from 表名
+max最大值 min最小值 可以用与数值的也可以用于字符串对比的是阿斯科尔马值 从前到后 
+select max(age)from 表名 
+
+avg获取平均值 参数是数值型 如果是字符型返回的是0因为字符转换不了数值，转化后为0；
+select * |字段列表from 表列表 where order by 排序字段列表asc(升序)|desc(降序) 可以多个排序 逗号隔开
+语法：select * from mytable by id desc 意思是id降序
+
+
+limit：获取指定范围的数据
+limit 后只有一个参数：相当于获得指定的前n条记录
+语法：select *from mytable limit n
+当想要获取表后面的值是需要变成降序（一开始是升序）
+注意：order by 必须写前面 limit 写后面 不然会出错
+如果是去两个值的话是 limit n(偏移量，从0开始),m获取的记录数
+
+
+第二种方案 可以
+select * from mytable limit m(记录行) offset n(偏移量)
+以后使用分页是可以用第二种方法
+例子
+int pageSize = 10;
+int pageCount = 1;
+select *from mytable limit pageSize offset(pageCount-1)*pageSize
+
+
+from where 的方式 
+select *from ,class where student.cid = classed
+
+join on 多表联查 join左侧有是一个表名 右边一是个表名
+语法 select 字段列表 from 左表 join 右表 on 条件
+select *from student join class on stydent.cid = class.classid
+left join;它可以获取左边中的所有数据 如果建立关联的数据字段在右边中没有存在，那么默认为null
+right join;它可以获取左边中的所有数据 如果建立关联的数据字段在左边中没有存在，那么默认为null
+
+
+高级查询有五种
+where group by having order by limit 循序不能改变
+
+group by 分组 分组为了统计
+求平均数
+select avg(字段列表) from 表列表 group by 字段列表（条件）
+having 筛选  就是添加一个条件 和where一样 因为在group by 后面不能用where 所以引申出having 来代替where
+
+可以起别名（只是方便下面的使用） as 别名(起名字时应该是前面名字的缩写) 例子 avg(age) as avg 后面使用avg(等于avg(age))
+
+
+truncate info 删除数据库
+
+php和数据库的链接
+设置主机 ，用户民 ，密码，想要操作的数据库
+写在php中$conn = mysqli("localhost1","root"，"root","mybase")
+die("链接失败") 输出并return
+exit() 退出
+
+
+mysqli_query(链接对象，sql语句)
+语法：mysqli_query($conn,$sql)
+mysqli_error(链接对象): 它可以输出最近一条语句在执行时所产生的错误信息
+语句和MySQL一样
+增添语法 insert into mytable values（null,"li",30,"男"）
+返回的是true 或者false 先要显示错误信息要用mysqli_error
+
+
+设置编码可以用 mysqli_query($conn,"set names utf-8")
+
+当用mysqli_query执行查询语句时返回的结果并不是表中的的数据 ，而是只是一个针对表数据的引用
+
+	1 如果查询失败,则返回false
+		2 如果成功：有结果集，但没有数据 有结果集也有数据
+$result(结果集) = mysqli_query($conn.$sql)
+判断结果集是否有数据 mysqli_num_rows($result(结果集))可以判断当前结果集中是否有数据行
+
+三码合一 mysqli_set_charset($conm)
+
+
+【特点】这能读取一行 但是读取一行后会把指针指向下一行 可以循环遍历
+没有的话为null 循环为while 
+mysqli_fetch_array(查询语句的结果集): 提取数据生成一个数组，同时生成索引数组和关联数组两种形式
+mysqli_fetch_assoc:提取数据生成一个数组：将数据生成关联数组
+mysqli_fetch_row:提取数据生成一个数组：将数据生成索引数组
+
+
+mysqli_fetch_array(结果集,返回内容的形式 MYSQL_ASSOC(关联数组)| MYSQL_NUM索引数组|MYSQL_BOTH关联和索引都有(不写默认为这个))
+
+
+1创建连接
+mysqli_connect(主机或ip，用户名，密码，想要用的数据库)
+链接成功，返回一个链接对象（资源对象），连接失败返回false；
+2设置编码 ：主要解决浏览器出现乱码
+	1.服务器的编码和php的不一致;mysqli_set_charset($conn,"utf8")||mysqli_query(主机，"set names utf-8")
+	2php和浏览器	端的编码不一致；header("content-tpye:text/html;charset=utf-8")
+
+3 创建sql语句
+	1，新增如果是字符串类型，一定要用引号
+	2删除和修改一定要考虑是否有条件【删了数据库你就死翘翘了】
+
+4 执行sql语句	
+	1增加删除和修改：如果成功则返回true，否则返回false
+	2 查询
+		查询失败 false
+		查询成功但没有数据行：mysqli_num_rows(资源对象)
+	3使用mysqli_query($conn.$sql) 执行
+5接受返回值
+	增加删除和修改：true/false
+	mysqli_fetch_array(查询结果集)：每次读取一行数据，生成数组，里面包含两种形式的数据(索引数组，关联数组)
+        mysqli_fetch_assoc:每次读取一行数据，生成数组,里面只包含关联数组【后期这个使用较多】
+        mysqli_fetch_row:每次读取一行数据，生成数组，里面只包含索引数组
+    循环读取：
+        while($row = mysqli_fetch_assoc(结果集)){
+            $arr[] = $row;
+        }
+		查询成功也有数据行
+
+
+
+及时的关闭连接对象
+mysqli_close()
+
+uniqid()随机生成一个唯一的id
+语法 前缀.uniqid().png
+
+自定义属性
+
+code 请求的状态-约定如果是某些特点的数字，代表不同的状态比如：1代表成功，0代表失败
+msg 想要返回给前台的一些信息
+data：返回给前台的数据

@@ -1,0 +1,12 @@
+登录成功后，获token值，保存到localstorage中 
+localstorage.setItem('token',"获取到的token值")
+设置请求头
+headers: { 属性名(后台设置的): localstorage.getItem('token') }
+
+请求拦截:在所有请求发送之前，将请求拦截下来，对请求的配置参数进行处理
+axios.interceptors.request.use(function(config){
+config.headers.属性名(后台设置的) =localstorage.getItem('token') }
+	return config
+}, function(error){
+}
+)

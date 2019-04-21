@@ -1,0 +1,33 @@
+git init 初始化仓库
+git config --global user.name ''
+git config --global user.email ''
+
+git add ./ 添加
+git commit -m '' 提交
+git push 推送到远程仓库
+
+git pull 下拉
+
+git log 查看日志
+git log --oneline 查看简洁版日志
+git reflog 查看所有日志
+
+git reset --hard 版本号     
+
+git clone 克隆
+
+1. 将本地仓库中的代码推送到远程仓库
+git remote add origin git@gitee.com:huangleyang/eeeee.git
+git push -u origin master
+
+2. 使用git clone仓库（以后工作中常用的方式)
+git clone url仓库地址
+git add ./ 
+git commit -m ''
+git push
+
+git pull
+
+3. git操作习惯 先拉(git pull) 后推(git push)
+
+4. 以后工作中是这样的  早上上班 git pull  晚上下班git push

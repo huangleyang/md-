@@ -1,0 +1,70 @@
+webpack
+	有什么用	
+	1.将所有静态资源进行合并压缩
+	2.使用前端模块化处理项目中的文件依赖性关系
+	3.将高级js语法转化为低级js语法
+
+	使用一个main.js在这里面导入所有包文件 页面中只导入main.js 可以解决二次加载(加载不同文件)时速度慢的问题
+	main中有独有的引入包的方法(固定的方法)
+	import *** from *** 是ES6中导入模块的方式.
+	但是这种写法浏览器解析不了 需要使用webpack初始化一下
+	import $ from 'jquery'相当于node中的
+	const $ = require('jquery').
+
+	webpack能干什么
+	1.webpack能处理JS文件的相互依赖关系
+	2.webpack能够处理JS的兼容性问题把 高级的，浏览器不是别的语法，转化为低级的，浏览器能正常识别的语法 
+
+	使用webpack-dev-server这个工具可以帮忙打包js文件
+这个打包好的文件时以一种虚拟的形式，托管到了咱们项目的目录中 他是存储在电脑的内存中，只要数据改变浏览器就根据内存的中数据中的改变而改变(自动刷新页面)
+
+更改配置项 package.json
+在  "scripts": {
+    
+		"test": "echo \"Error: no test specified\" && exit 1",
+    
+		"dev": "webpack-dev-server --open --port 3000"
+  },
+添加一个"dev" 可以使用 npm run dev调用
+	第一个参数webpack-dev-server 是要运行的包
+	第二个参数--open自动打开保存并生成的页面
+	第三个参数 --port 3000 更改端口号
+	第四个参数 --contentBase src 以src为根路径打开
+	第五个参数 --hot 可以实现页面无数新改变数据 且当你改变数据的时候他不会重新生成数据 只是将你改变的数据，改变了而已(可以看做当成一个补丁添加进去了)
+	
+
+	引用css样式
+	1.需要index.js在中先 引用需要的css文件
+	2.下载两个包 npm i style-loader css-loader -D
+	3.然后在	webpack.config.js 更改配置项，使当文件引用了css文件的时候 调用我们下载下来的包
+	 module: {
+        rules: [
+            {test: /\.css$/, use: ['style-loader', 'css-loader']}
+        ]
+    	}
+
+{test: /\.(jpg|png|jpeg|gif|bmp)$/, use: 'url-loader?limit=7777'}
+	配置选项中可以直接进行传参 和地址栏传参一样 当匹配图片的时候文件大于或等于规定的值是(单位byte)，则不会转化为base64编码格式
+	这样设置出来的不是原来的名字如果需要使用原来的名字
+{test: /\.(jpg|png|jpeg|gif|bmp)$/, use: 'url-loader?limit=7777&name=[hash:8]-[name].[ext]'}
+	但是这样话当项目中有图片文件重名 就只会使用后面引用的图片 因为他是存在目录内存中声明的当有重名的后面的就是把前面的替换掉 可以在前面多添加一个hash值(可以避免文件名的重复)
+
+	class关键字，是ES6中提供的新语法，是用来 实现 ES6中面向对象编程的方式
+
+	class Person {
+	使用static关键字，
+	可以定义静态属性 所谓的静态属就是 可以直接通过类名，直接访问的属性 (可以通过类名点属性名)
+	实例属性：只能通过类的实例，来访问的属性，叫做实例属性 
+	
+	static info = { name: 'zs', age: 20 }
+}
+	let wo = new Person() 
+	实例属性是通过wo这个实例来调用的
+
+	webpack中，默认只嗯呢该处理 一部分ES6的新语法。一些更高级的ES6语法或者ES7语法， webpack是处理不了的；这时候，就需要 借助于第三方的loader，来帮助webpack处理这些高级的语法
+	
+
+在babel中的 
+ {test: /\.js$/, use: 'babel-loader', exclude: /node_modules/ },
+	exclude不包含
+	include 只包含

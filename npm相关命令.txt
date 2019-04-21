@@ -1,0 +1,34 @@
+全局和局部
+全局包: 安装完了之后在电脑的任意盘符任意文件夹内都可以使用的包
+局部包: 在哪个文件夹内安装只能在哪个文件夹内使用
+
+// 安装过程中如果出现错误 先到C:\Users\用户目录\AppData\Roaming\ 将npmcache目录删除掉即可
+
+- 安装/卸载 全局包命令
+npm  install     包名字 -g   // 演示 npm install i5ting_toc -g  
+// i5ting_toc这个包的作用是将.md文件转为html文件   i5ting_toc -f 文件.md -o 
+// -f后跟的是.md文件  -o表示自动在浏览器中打开
+npm  uninstall 包名字 -g
+
+- 安装/卸载局部包
+1. 新建项目目录
+2. 在新建的项目目录中通过shift + 鼠标右键 打开命令行窗口
+3. npm init -y 这个命令是初始化一个package.json包文件
+   package这个包文件是帮你记录你曾经安装了哪些包(类似于一个账本)
+4. 4.1 npm install 包名字 --save 或(npm install 报名字 -S)下载包到线上环境 dependencies
+   4.2 npm install 包名字 --save-dev 或(npm install 报名字 -D)下载包到测试环境 devDependencies
+5. 卸载包 怎么安装怎么删除 npm uninstall 包名字 --save / npm uninstall 包名字 --save-dev
+补充说明: 如果你的npm版本大于5.0  npm i zepto 默认是相当于 npm i zepto -S
+
+
+- 如果你的下载包的速度比较慢 就可以使用 淘宝镜像
+1. npm install -g cnpm --registry=https://registry.npm.taobao.org 执行此命令
+2. 以后再安装就使用cnpm 替代npm去下载包
+   npm install jquery -D  使用淘宝镜像 cnpm install jquery -D
+
+
+- 改变网速的方式还有一种
+1. yarn 工具下载
+2. npm install yarn -g
+3. yarn init 初始化一个包文件
+4. yarn add 包名 / yarn remove 包名

@@ -1,0 +1,136 @@
+	伸缩盒子(弹性)布局
+	1.给父盒子设置 display : flex;
+	2.方向问题 flex-direction: column;默认是横排 column是设置为竖排 
+	3.对齐方式： justify-content: center; 主轴的对齐方式  align-items: center 交叉轴
+		3.1 center居中对齐
+		3.2 space-between居中对齐
+	4.换行问题: flex-wrap: wrap; 默认是不换行
+	
+
+	微信小程序
+		1.结构 WXML 不是HTML 遵循的是XML语法
+	常用标签 <view> ；类似于div
+		<text> ；类似于span
+		<image> ；类似于img 
+	1.图片开发的时候记得设置宽高 
+	2.记得设置缩放模式 mode="aspectFill"	
+	
+		<navigator> ；类似于a
+
+		2.样式 WXSS 尺寸单位 rpx(responsive pixel 响应式像素) 
+	样式导入 @import "样式表路径"
+		3.行为 js ECMAScript 注意：微信小程序里没有BOM和DOM的概念
+		api 文件 网络 媒体 ect.
+		4.配置 app.json 严格JSON 
+			4.1 不能写注释
+			4.2 只能使用双引号
+			4.3不能有多余的分号
+	
+
+	底部导航栏
+	tabbar 在全局中的app.json中设置
+		1.最少要有两项 因为一项的话就不需要导航了
+
+
+
+	生命周期函数
+	全局的app文件 app(){}
+	在整个应用启动时触发 只会触发一次
+	执行时机：小程序在内存中被分配了内存空间，完成初始化
+	应用场景： 对整个应用共享数据进行初始化
+	onLaunch: function() {}
+
+	应用程序显示在屏幕上 options 这个参数中有一个scene属性，记录着进入的方式 不同的值对应着不同的方式 
+	onShow: function(options){}
+
+	隐藏到后台  看不到小程序了
+	onHide: function(){}
+
+	错误时 只能捕获到运行阶段的异常 生命周期函数出错时
+	onError: function(){}
+
+	获取全局唯一的应用程序对象
+	const app = getApp()
+	在一个app({})中声明的对象可以在任何一个页面中获取到，因为所有的app({})都是一个应用程序对象 相当于你在一个页面中定义了全局对象 
+ 	但是作用域是局部的（在app外声明变量）
+
+	创建一个页面实例对象
+	Page({})
+
+	data{}
+
+	页面加载 这个页面即将工作了 适合去做数据的初始化
+	可以进行数据初始化，类似于created
+	onLoad(){
+	可以使用this.setData设置data里面的值 有两个参数，第一个是属性名，第二参数是属性值 
+}
+	
+	页面进入焦点(前台展示)
+	跳转页面获取参数
+	onShow(){}
+
+	当页面渲染完毕的时候
+	调用操作页面的APi
+	onReady(){}
+
+	页面进入后台状态
+	onHide(){}	
+		
+	页面销毁
+	用于页面卸载之前保存页面状态
+	容易造成内存泄漏
+	onUnload(){}
+
+
+使用
+	页面中可以使用Page中的data数据(和vue相似)
+	可以直接使用 mustache 小胡子语法 vue中的插值表达式 不同于vue的是可以 元素内容和属性上使用 可以直接拼接
+	<input value="{{info}}" />
+	
+
+	wxml语法 属性必须要有属性值 且要使用双引号包起来
+	小程序的wxml中属性的值 如果只是在双引号内部 它永远是字符串
+	想要使用类型的值 可以使用mustache语法
+
+	想要绑定事件需要在本页面使用wxs标签
+	<wxs module="foo">
+		module.exports = {
+		getinfo: function(a){
+		retuen 	a + 1
+}	
+	}
+	</wxs>
+
+	控制属性
+	wx:if和v-if一样 wx.else和v-else一样，但是没有v-show 但是小程序给了我们替代的hidden 当hidden为true的时候隐藏
+
+	block只是一样包装元素，不会对界面的解构造成任何影响
+	<block wx:if="{{ flag }}">
+	<text>美食</text>
+	<text>美食</text>
+
+	</block>
+
+
+	事件处理
+	bindtap 所有的事件都以bind开头	
+	e事件
+	detail坐标相对于左上角
+	事件冒泡
+	通过catchtap绑定的事件不会有冒泡 子元素写
+	想要通过事件bindtap传递参数可以给其添加自定义属性 data-id="1"
+	可以在e.target.dataset中获取到
+	 
+
+	单项数据流(react, 小程序)
+	双向数据流(vue, angulur)
+	对input的同步数据渲染
+	<input value="{{ foo }}" bindinput="change">
+	
+	setData
+	1.改变数据源 第一个参数是data中的参数 直接写属性名，第二个参数是要改变的值
+	2.通知框架，数据源变了，需要重新渲染页面
+	this.setData({foo: e.detail.value})
+
+	rpx
+	微信规定了屏幕为750rpx

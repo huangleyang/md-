@@ -1,0 +1,208 @@
+js
+是一门脚本型语言 电脑直接执行 不需要编译
+是一门解释型语言
+是一门动态型语言
+是一门基于对象的语言
+是一门弱类型语言
+
+
+简单数据类型
+number 数字类型
+string 字符串类型
+null 空类型
+undefined 未声明类型 
+什么时候yongundefined 声明了变量但为赋值时 。
+symbol
+
+复杂数据类型
+opject 对象
+function 函数
+
+算数运算符的优先级 先 乘 除取余 再加减
+
+js 里面的=是赋值的意思
+
+一元运算符中的
+前置自加++num
+先自增，再返回值
+后置自增是num++
+先返回值 后自增
+（前提是只能是变量）
+
+比较运算符
+
+console.log("10"==10); ture 比较值是否相等 == 会隐式转换 会把"10"转换为数值型的10
+（字符类型的数字（"9"） 和字符类型的数字（"10"） 比较的ASCII ）
+ASCII 基本的比较 从小到大 0-9 大写的字母 小写的字母 
+想要比较需要数值，必须的转换一个为数字类型
+===全等 要求数值和 数据类型都一样；
+
+parseInt() 转换为整数类型 支取整数部分 尽可能的转换 
+parseFalot （） 转换为小数类型 尽可能的转换 
+
+Number () 转换为数字类型（取小数）  非常严谨 只要含有不是数字的数据 会出现NaN
+
+转换为字符串类型
+toString() 定义为声明的会是NaN
+String（） 可以定义未声明的变量
+""+10 输出值为字符类型
+
+boolean类型
+console.log(Boolean(''));
+        console.log(Boolean(0));
+        console.log(Boolean(null));
+        console.log(Boolean(undefined));
+        console.log(Boolean(NaN));
+以上五种为false
+其余都为true
+
+先&& 后||
+
+for (初始化变量； 条件表达式；自增表达式(不加冒号){
+	需要执行的代码	
+}
+isNaN (数字) false
+isNaN (数字) true
+isNaN (undefined) true
+isNaN ("") false
+isNaN ( 0 ) false
+isNaN ( null ) false
+
+parseInt(a,10)转化为十进制  (a,8)转化为八进制 （a,2)转化为2进制 
+
+console.log (1>"1.5")中的"1.5"用number转换的；
+console.log(`我那今年 ${变量}`跑路了)
+ducument.write("") 再页面里面显示
+
+for循环 （已知循环次数的时候，使用）
+  for (var i = 0; i < 9 （外层循环的次数 外层的控制行 重点）; i++) {
+            for (var j = 0; j < 9-i（内层的循环的次数 内层的控制列 重点）; j++) {
+                str += '☆';
+            }
+            str = str + '\n';
+        }
+        console.log(str);
+while  不知道循环次数的时候用while
+数组里面是有序的，从0 开始
+var arr=[ "laoda "  "laoer" "laosan"];
+console.log（arr[0]）
+输出的是 laoda
+
+empty 空数组
+arr[arr.length]= "xixi"添加新的数组
+函数中没有return 会输出undefined
+
+JS方法 数组名.reverse 反转数组。
+
+
+fn函数名 fu（） 调用函数
+自执行函数，（fenction（） {}）（）
+
+
+变量为申明直接只用的，也算全局变量；
+函数的形参实际上也是局部变量；
+
+
+域解析
+首先把var function进行代码提升 提升到当前作用域的最前面
+变量的提升的是声明并不赋值，函数只是提升声明，并不调用；
+
+创建对象用{}
+
+this一般指向它的调用者
+var obj = {};创建一个空数组;
+var obj = {
+                name: '刘德华',
+                age: 18,
+                sex: '男',
+                sayHi: function() {
+                    console.log('hi');
+                }
+            }
+ for(var key in obj);
+console.log(k)便利属性名
+conosole.log(对象名[k])遍历属性值
+我们使用对象属性 对象名。属性名 或者对象名["属性名"]
+我们使用对象的方法 对象名.方法名（） 
+var obj = new Object();创建一个空数组类似于 var obj={};
+对象名.属性名= 属性值;
+方法名.匿名函数
+console.log(obj.name);
+
+math
+Math.round四舍五入。出现点五的往大的取值
+
+mdn 网址https://developer.mozilla.org/zh-CN/
+
+Math.abs内置对象去绝对值
+如果是字符串类型会进行隐式转换
+
+年getFullYear()yue 月month 号date 星期几day 小时hours 分钟minutes 秒seconds
+
+
+
+
+判断是否是数组instanceof
+语法 变量名 instanceof Array
+方法 Array.isArray
+
+push（）里面的参数就是添加的元素，在最后面添加一个或者多个元素， 返回新的长度
+pop（）里面不跟参数 在最后面删除一个元素（仅仅只删除一个） 返回被删除的元素
+unshift （）里面的参数就是添加的元素 在数组的最前面添加一个或者多个元素 ， 返回新的长度
+shift（）里面不跟参数 在最前面删除一个元素 返回被删除的元素
+concat 合并数组 里面是一个值 和数组都可以 返回新数组
+语法：新数组 = 久数组.concat（值/数组） 括号里面可以是值也可以是数组（创建一个新数组，不改变原数组）
+
+翻转数组 数组名.severse（）返回的是新数组，不改变原数组
+升序排列；（降序排列是v2-v1）返回的是新数组，不改变原数组
+num.sort(function(v1,v2){
+            return v1 - v2;
+        });
+
+        console.log(num);
+
+ splice()插入，删除或者替换数组的元素
+清空数组splice（0）最好的方法是定义一个新的空数组（最简单）
+截取元素slice
+语法 数组名.slice(start,end) 系我去的不包括end不改变原数组 
+indexOf 重点 数组.indexOf（要查询的元素）； 查询该元素的下标；（返回查询到的第一个元素的下标）
+lastindexOf （从后往前返回查询到的第一个元素的下标）
+
+
+数组转换为字符串 toString（） join（[分隔符]） []里面的可写可不写
+语法 ；数组.toString（）
+语法 ；数组.join（） 括号里面不写和toString一样，加上分隔符，分割符链接两个转换为字符串。
+字符串转化为数组split（[]）第一个参数分隔符 必选 第二个参数 数组长度
+var str = "pink-blue-orange"
+var arr = str.split("-");
+原始数据类型 number string null undefined boolean object
+基本数据类型（简单数据类型）值类型 number string boolean
+复杂数据类型（引用数据类型）object Array
+空类型 null undefined
+
+简单数据类型（值类型） 存储在计算机的栈里面
+栈
+简单数据类型存储的是值 他们不会相互影响
+
+复杂数据类型           存储在计算机的堆里面
+当把复杂数据类型赋值给简单数据类型时 ，简单树精类型中的变量存储的是复杂数据类型的地址 （十六进制表示
+复杂数据类型里面的是地址 同意地址里卖弄的对象发生了改变，他们之间会相互影响
+
+基本包装类型 为了方便js，把我们的简单数据类型转化为了复杂数据类型，这就是基本包装类型
+基本包装类型也算引用数据类型；
+String / Number/Boolean   只不过解百纳使用Number和 Boolean
+
+charAt（）位置（索引号） 返回字符 一次只能查找一个
+语法：变量名.charAt(index) indxe是索引号的意思
+charCodeAt 返回字符的ASCII值
+str[index] 过去指定位置的字符 和数组用法一样
+
+substr 截取字符串。用法和splice非常相似
+语法；substr（要截取字符串的起始位置，要截取字符串的长度）
+
+replace （被替换的字符，替换的字符）；
+
+大小写转换
+转化为大写toUpperCase()
+转化为小写toLowercase()
+indexOf（）

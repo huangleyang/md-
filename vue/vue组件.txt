@@ -1,0 +1,72 @@
+当组件需要绑定原生事件的时候需要加上native
+native修饰符可以将原生事件，进行传递，一直穿透到根元素上面进行绑定
+例子@click.native="fn"
+
+	定义Vue组件
+	模块化：是从代码逻辑的角度进行划分的：方便代码分层开发，保证每一个功能模块的职能单一
+	组件化：是从UI界面的角度进行划分的：前端的组件化，方便UI组件的重用
+
+	1.定义组件的第一种方法
+	使用Vue.extend 来创建全局的vue组件
+var coml = Vue.extend({
+	template: "<h3>组件</h3>"
+})
+	使用vue.component('组件的名称','创建出来的组件模板对象')
+Vue.component('mycoml', coml)
+在body中之间使用
+<mycoml></mycoml>
+
+	组件终极奥义
+    Vue.component('mycoml', {
+                template: "#xixi"
+            })
+ <template id="xixi">
+        <div>
+                <h3>生而为人</h3>
+		<span>和平</span>
+        </div>
+  </template>
+
+	1.组件中可以有自己的data
+	2.组件的data和实例的data不一样，实例中的data可以为一个对象，但是组件必须是一个方法
+	3.组件中的data 方法还必须retuan 对象
+	4.组件中的data数据和实例中的使用方式一样
+
+axios的使用方法
+
+    <script src="./lib/axios-master/dist/axios.js"></script>
+ axios.get('http://www.lovegf.cn:8899/api/getprodlist').then(result => {}
+
+配置根路径 axios.defaults.baseURL="url"
+
+	组件中的不能是一个对象 如果写成对象，则会出现修改了组件的数据，其他使用该组件的地方也会改变
+	为什么使用函数返回一个对象 因为当每个自检调用数据的时候都会调用该函数 返回一个创新的值，每个对象互不影响
+
+父组件给子组件传值
+<wo  v-bind:fuzhi="msg">
+
+components: {
+                wo: {
+                    template: "<h1>子组件的元素 --- {{ fuzhi }} {{ name }}</h1>",
+                    props: ['fuzhi']
+                }, 
+            }
+
+dom元素的获取和组件的获取
+
+
+后端路由：监听网络请求，根据请求处理相关业务逻辑，将数据响应带客户端
+前端路由： 监听浏览器的hash值的变化，根据hash的切换展示不同的组件，使用前端路由书写的页面都叫做单页面(spa)
+
+组件传值
+父向子传值
+1.属性绑定 v-bind props接收数据 (单向数据流)
+2.this.$parent
+
+子向父传值
+1.事件绑定 @fn='func' this.$emit('fn',data) 通过调用方法 参数传值
+2. 子组件this.parent获取父组件的实例对象，通过调用父组件的方法调用	
+3.父组件中调用this.$refs.子组件名 获取到了子组件的实例对象
+
+想在组件内部写入文件(直接写会被模板内容替换) 这时候就需要使用到插槽 
+用法 在模板(template)中<slot></slot>	

@@ -1,0 +1,308 @@
+创建对象
+var 变量名 = new 函数名
+正则表达式/需要的元素/gi
+g全局的
+i忽略大小写
+APi
+此处的web api 特质浏览器提供的API(一组方法) Web API在后面的课程有其他含义
+
+
+ECMAScript
+定义了JavaScript的语法规范
+JavaScript的核心，描述了语言的基本语法和数据类型，ECMAScript是一套标准没，定义了一种语言的标准与具体实现无关
+
+
+BOM-浏览器对象模型
+一套操作 浏览器的功能API
+通过BOM可以操作浏览器窗口，比如；弹出框，控制浏览器跳转,婚娶分辨率等
+
+
+DOM-文档对象模型
+一套操作页面的API
+DOM可以把HTML看作是文档树，通过DOM提供的API可以对树上的节点进行操作
+
+
+文档；一个网页可以被称为文档
+节点：网页中的所有内容都是节点（标签，属性，文本，注释等）
+元素：网页中的标签
+属性:标签的属性
+
+
+根据id获取元素
+如果页面上没有对应的id 此时会返回null
+语法 var 一般声明为id名（方便以后好查找） = document.getElementById("id") 
+get 获得 Element 元素  By根据 Id标示 
+id区分大小写
+get Elements Tag意思是标签 Name名字（） 获取的是伪数组 同时获取的也是一个动态的集合
+HTMLCollection 集合 伪数组，
+
+
+query 查询
+Selector 选择器
+根据选择器查找元素
+document.querySelector(); 返回第一个元素
+document.querySelectorALL(); 返回匹配到的元素（ie8以上）
+语法：如果要找id为main  document.querySelector(#mian)
+
+
+如何给按钮注册事件 
+事件名称：click
+事件源：谁触发的事件
+事件处理函数
+
+
+标签对象.on事件名=匿名函数
+语法：单机事件
+标签对象.onclick = function (){
+}
+
+
+
+判断属性的值getAttribute
+取消a链接默认跳转 在执行过后return false
+this 的指向问题  一般情况下 this 指向的是它的调用者
+
+
+
+innerHTML  innerText
+innerHTML  获取内容的时候，如果内容中有标签，会把标签页获取到
+innerText  获取内容的时候，如果内容中有标签，会把标签过滤掉
+box.innerHTML = ''清空内容
+通过innerHTML 设置内容，如果内容中带标签，会以HTML的方式来解析
+通过innerText 设置内容，如果内容中带标签，在网页上会把标签显示出来
+
+
+如何知道浏览器中有没有这种属性
+语法：console.log(typeof 变量名.属性名)
+如果有该属性 则会返回该属性的类型
+
+
+disabled 禁用一个 input 元素
+
+
+option中有个选中属性selected
+获取焦点 onfocus
+失去焦点 onblur
+checkbox 里面checked 布尔类型
+
+
+
+autofocus 自动获取焦点
+onfocue 获取焦点
+onblur 失去焦点
+
+
+Attribute 属性
+获取自定义属性的值 
+语法：id名.getAttribute(age)
+添加自定义属性 和自身属性的方法
+语法：id名.setAttribute(age , 18)
+移除属性
+语法：id名.removeAttribute(age, 18)
+
+
+if（）里面是false直接输出else
+鼠放上去时候onmouseover
+鼠标离开时onmouseout 
+
+
+非表单元素href title src alt等
+表单元素 type value checked disabled selected
+公共样式 id className style
+样式操作 className style
+自定义属性 getAttribute  setAttribute  removeAttribute
+
+
+children 子元素 选中付元素的所有子元素
+|| 布尔类型的运算符，如果有一边是true就返回true，如果两边同时为false返回false
+|| 两边也可以是其它类型，会先转换成布尔类型
+如果第一个 运算数 转换成布尔类型，是true ，直接返回这个运算数
+如果第一个 运算数 转换成布尔类型，是false，返回第二个运算数
+
+
+parenNode 父节点 只有一个
+childDodes 子节点 有很多（）
+children 子元素
+语法：父级.children 所有的子元素
+
+
+
+节点 标签 属性 文本 注释
+元素 标签
+判断有没有子节点
+语法 父级.hasChildNodes
+
+
+box.firstChild 获取第一个子节点
+box。firstElementChild 获取第一个字元素 ，有兼容性问题，从IE9以后支持
+
+
+动态创建元素 三种
+document.write
+element.innerHTML
+document.createElement() 重要的
+
+
+
+主要使用第三种
+在内存中创建了一个dom对象
+语法：var p = document.createElement("p")(动态创建了p段落)
+设置对象属性
+p.innerText = "hello";
+p.style.color = "red";
+把p标签，放到dom树上面
+var box = document.getElementById("box");
+box.appenChild(p);
+找到需要放入的盒子 appendChild：（创建一个子元素）
+
+
+
+
+给文本添加 文字
+setInnerText（文本，文字）
+
+
+合并边线collapse
+createElement 创建节点
+语法 var li = document.createElement("li")
+
+
+removeChild 删除子节点
+语法：table.removeChild(tr)
+insretBefore（）把元素插入到页面的指定位置
+replaceChild 把当前的标签进行替换
+语法：ul.replaceChild(div,ul.children[0])
+
+
+addEventlistener     给元素注册事件(用以解决发生两次事件时后一次事件会覆盖前一次事件)用addEventlistener注册事件时事件都可以发生 兼容性（ie9之后支持）
+语法：btn.addEventListener("click",function(){})
+attachEvent 也是注册时间 兼容性（ie6到ie10）ie特有的语法
+
+
+
+removeEventlistener 移除事件 
+语法 btn.removeEventlistener（"click",btn）
+eventName : 表明事件
+btn.removeEventlistener（obj，eventName,fn）
+
+
+
+事件冒泡
+addEventListener的第三个参数为false的时候 ：事件冒泡
+addEventListener  的第三个参数为true的时候：事件捕获
+事件冒泡：
+事件 的三个阶段
+第一阶段：捕获阶段
+第二个阶段：执行当前点击的元素
+第三个阶段： 冒泡阶段
+e.target 是真正触发事件的对象
+e.currenttarget 事件处理函数所属的对象
+ 当所属的对象就是触发对象时e.target和e.currenttarget没有区别
+
+
+box.onclick = function (){
+	e = ||window.event; //window.event兼容老版本的ie
+	获取鼠标在浏览器的可视区域的坐标
+	console.log(e.clientX);
+	console.log(e.clientY)
+	鼠标在当前页面的坐标
+	console.log(e.pageX);
+	console.log(e.pageY)
+}
+
+
+oppsetParent获取距离当前元素的最近的定位独院的如果没有定位父元素此时是body
+box.offsetLeft 距离这个盒子最近的父元素的偏移量  
+box.offsetTop   距离这个盒子最近的父元素的偏移量
+
+
+组织默认行为的执行（例如a链接的跳转）
+return false；
+e.preventDefalut
+取消冒泡 停止事件传播
+标准的dom方法
+e.stopPropagation()
+老版本的ie问题可以使用
+e.canceBubble = true;
+
+
+
+当键盘按下时onkeydown （可以判断文字能否输入的条件）
+当键盘松开时onkeyup 
+e.keyCode 判断键盘按下对应点ASCII码值
+
+
+window是顶级对象
+name是window的属性 ，是字符串
+window的已有属性不能改变 只能获取
+
+
+对话框弹出确定还是取消 confirm 是boolean
+
+
+onload 页面加载完毕治愈后执行
+unload 当页面卸载时执行 执行时对话框无法弹出因为window对象被冻结
+F5刷新页面
+1卸载页面
+2加载页面
+
+
+setTimeout（函数，执行时间   毫秒）  定时炸弹 隔一段时间执行， 并且只会执行一次
+clearTimeout()需要取消定时是 必选先给该定时声明一个变量 然后才clearTimeout里面输入声明变量
+setInterval 闹钟 隔一段时间执行， 并且只会重复执行
+
+
+location 可以获取或者设置浏览器地址栏的URL
+location.href 跳转到这个页面上来 记录历史
+location.href = 'http://www.itheima.com';
+assign 委派
+assign() 的作用和href的作用一样。可以让页面跳转到指定的地方
+location.assign('http://www.itheima.com');
+替换掉地址栏中的地址，location.replace 不记录历史
+location.replace('http://www.itheima.com');
+
+
+参数   true 强制从服务器获取页面    false  如果浏览器有缓存的话，直接从缓存获取页面location.reload(true);
+location(false)如果浏览器中有缓存 直接调用已有的 缓存
+F5刷新页面 ，可能在缓存中加载
+当location括号里面是true 是强行在浏览器里面加载刷新
+ctrl+F5 强制刷星从服务器获取页面
+
+
+页面的前进和后退
+前进时window.history
+后退时 window.back
+也可以用window.go(1)是前进一个页面 括号里面的数字代表前进几个页面
+也可以用window.go(-1)是后进一个页面 附属为后退
+
+
+怎么可以知道你是客户端还是移动端的用户
+在控制台输入 navigator.userAgent 
+
+
+获取盒子的大小
+box.offsetWidth （包括padding和border）
+box.offsetHeigth（包括padding和border）
+
+
+box.clientLeft 盒子的border的值
+box.clientTop 盒子的border的值
+box.clientWidth内容的大小加上padding但不包括border
+box.clientheigth内容的大小加上padding但不包括border
+
+
+box.srcollWidth 内容的大小加上padding但不包括border和滚动条
+box.srcollHeight  内容的大小加上padding但不包括border和滚动条
+box滚动出去的距离
+console.log(box.scrollLeft) 内容出去的距离不是滚动条的距离
+console.log(box.scrollTop);
+
+
+toLocaleString 访问当地的
+
+
+mouseover  鼠标经过 会触发事件冒泡
+mouseenter 鼠标经过 不会触发事件冒泡
+nouseout   鼠标移除 会触发事件冒泡
+mouseleave  鼠标移除 不会触发事件冒泡
+

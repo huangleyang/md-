@@ -1,0 +1,62 @@
+请你简述一下对vuex的理解
+
+vuex 是一个象全局库，如何组建都可以使用vuex中的数据 也可以改变vuex中的数据 
+	但是，在vuex中有一定的规范
+	首先我先介绍一下vuex有一个属性
+	state 数据存储
+	mutations 同步数据操作 一般用来更改数据
+	actions 异步数据操作
+	getters 计算属性 特点是当state中的数据发生改变的时候getters函数自动调用 一般用来返回数据
+	module 模块化分隔 当数据过大的时候可以将其分成一个个先的模块， 其小的模块也有全部的属性
+
+在其他页面中需要访问state中的数据需要使用this.$store.state.数据名称
+
+
+	vuex是为了保存 组件之间共享数据而诞生的，如果组件之间，有数据需要共享，可直接挂在到vuex中，而不必通过 父子组件之间传值了。
+props 防父组件传递的值
+组件内部私有的数据，只有放到组件的data中即可
+props和data vuex 的区别
+
+	vuex是一个全局的共享数据存储区域，相当于一个公共的数据仓库
+
+先应用
+
+import Vuex from "vuex"
+Vue.use(Vuex)
+const store = new Vuex.Store({
+  state: { //相当于data数据
+    count: 0
+  },
+  mutations: {
+    increment (state) {
+      state.count++
+    }
+  ,
+  getters: {
+    optCount: function(state) {
+	retuen: '当前最新的count值是: '+ state.count
+  }
+  }
+})
+
+	1.state  相当于vue中的data
+	2.mutations 相当于methods
+	3.getters 相当于计算属性 computed
+	4.action 相当于mutations(同步执行) 但是这个是异步执行的 不直接修改数据，在异步操作拿到数据后，触发mutations中的方法
+	第一个参数 context
+	this.$store.dispatch('getMenus')
+	5.module 将store分割成一个个模块，每个模块都是独立的拥有数组自己的state，mutations，getters action 甚至还可以有子模块
+ 
+
+需要改变state中的值，最好使用mutations: 中的方法，将数据操作封装成一个方法，然后那个页面改变数据，就调用对应的方法
+方法调用时t21:52 2019/3/21 星期四s.$store.commit('方法名')可以有第二个参数(也只能有一个)当需要传递多个值的时候，可以将其设置为一个对象进行传递
+
+getters为改变原数据，只能包装了一下
+而且，getter也和computed比较像只有state中的数据发生改变，那么，如果getters正好引用了数据，数据就会重新求值
+使用 this.$store.getters.方法名
+			
+总结
+	1.state中的数据，不能直接修改，如果想要修改，必须通过mutations
+	2.如果组件想要直接从state上获取的数据：需要this.$store.state.***
+	3.如果组件想要修改数据，必须使用mutations提供的方法，徐亚通过htis,$store.commit('方法的名称',唯一的名称)
+	4.如果store重点state上的数据，在对位提供的时候，需要做一层包装，那么推荐使用getters，如果使用需要getters，则用this.$sto.getters.***

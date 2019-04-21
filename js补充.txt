@@ -1,0 +1,192 @@
+【重点】函数形参会在函数中声明
+	1.如果在实参是一个对象 在函数调用的方法就是形参名.对象名
+语法 function in(option){
+	var option = {name:黄浩"}，这是系统帮生成的
+所以想要获取option属性 直接可以写option.属性名
+}
+
+in({name:"黄浩"})
+
+去掉选中表单时的边框线 outline:none;
+ 
+jq中的直接引用(相当于复制).html()方法
+
+console.log() 会在浏览器控制台中打印出信息
+console.dir() 可以显示 一个对象的所有属性和方法
+
+在js中全部区分大小写
+php中只有函数不区分大小写
+
+屏幕滚动事件 onscroll
+
+ES6 【重点】
+	对象的扩展
+	对象的新增语法
+	Class的基础语法
+	Promise对象
+
+
+当发生get请求时 url里面的全部的数据可在location中全部获取
+
+？之后(传递的参数)的数据可以search中获取
+
+	jQ 表单id.submit(函数)方法 有什么啥子用
+语法$(".form").submit(function(){
+	发送ajax请求
+	为什么这样子写，方便用户使用 回车可以提交
+		return false组织默认行为的发生(不用get方式提交)
+})
+
+当一个对象有length属性的时候 他就是一个伪数组
+
+
+当a链接中的href写相对路径的时候 实际上是绝对路径 相对路径是一种简写的方式
+
+锚点 也是将这个页面的绝对路径的写在前的 默认写上的
+
+事件委托
+jq里面的on 给父级元素添加事件
+语法 $("tbody").on("click","tr"，回调函数)
+
+jq转化为js对象
+var ct = $("p").get(0)
+var add =$("add")[0]
+
+在jq里面使用ajax时
+上传文件一般不用点击事件 用的是change
+
+获取文件属性 
+this.files[0]  (file：发送)
+ajax不能上传文件(文件对象)
+需要var formdata = new FormData() 转化为二进制
+formdata.appent("file",file) 把file放入formdata中file自动转化为二进制
+$ajax({
+data:formdata,
+contentTtpe:false,//上传文件时写入这两个方法
+processData:false,
+})
+
+
+【重点】 一般在前端都是用/根目录
+路径上 / 是网站根目录可以直接
+语法  /次级文件夹 
+
+但是在php中 没有/ 网站根目录 只有相对路径和绝对路径
+
+富文本编辑器
+	1.引用文件
+	2.准备一个文本域 ，需要id
+	3.调用插件提供的方法，
+		CKEDTOP.replace(对应文本域的id)
+	在收集数据之前需要
+
+编辑器对象.updateElement()这个方法是吧写入的更新到文本域	
+CKEDTOP.instances.content(id名).updateElement()			CKEDTOP.instances.id.updateElement()
+
+display:none 是占位置的
+visibility: hidden;不占位置的
+
+引用分页插件
+	1.引用分页插件
+	2.使用样式 可以是bootstrap提供样式，也可以使自己的样式	
+	3.要有一个可以调用函数的标签 可以ul 也可以使div
+	4.调用twbsPagination 反正分页效果
+	
+	回调函数onPageClick:function(event,page)
+	两个参数 第一个事件对象 第二个是当前的页码
+
+刪除替換数组splice (下标[,个数(不写就是到最后一个)][,需要添加的元素从索引哪里开始])
+
+截取字符的 substr(下标，个数)
+
+append 不能把自己添加给自己会报错
+
+	1.将图片设为块状元素，display: block
+	2.将文本的字体大小设为0，font-size: 0
+	3.设为底部对齐，vertical-align: bottom
+
+insetBefore(需要插入的dom元素,位置)
+
+margin-collapse 外边距重合
+
+js中不建议使用分号 
+	【重点】当你使用无分号代码风格的时候只要注意以下这三种情况
+	当一行代码是以
+		(
+		[
+		`  这个是反引号 叫做：模板字符串 ES6中新增的方法 它支持换行和非常方便的拼接变量
+	开头的时候在前面加上一个分号
+	例如	在自调用函数前面要加分号
+
+	slice()方法中第一个参数不写就是从0开始 意思是数组.slice 深拷贝这个数组 深拷贝 是拷贝的整个复杂类型 而不是地址
+	
+
+
+	ES5中的数组方法
+	处理forEach之外其余的几乎都要return
+	
+	1.filter 筛选
+例子
+	2.map 映射
+	3.every 数组中每一项
+	4.some 数组中某一项
+
+使用伪类元素时 父级元素必须有固定的宽高
+
+扩展运算符（ spread ）是三个点（...）。它好比 rest 参数的逆运算，将一个数组转为用逗号分隔的参数序列。
+
+
+new操作做了什么
+
+创建一个新空对象--构造函数中的this指向这个新空对象 -- 执行构造函数中的代码 --返回这个新的空对象 -- _proto_指向构造函数的原型
+
+		回调函数
+	回调函数就是一个通过函数指针调用的函数。如果你把函数的指针（地址）作为参数传递给另一个函数，当这个指针被用来调用其所指向的函数时，我们就说这是回调函数。回调函数不是由该函数的实现方直接调用，而是在特定的事件或条件发生时由另外的一方调用的，用于对该事件或条件进行响应。
+
+
+场景一   采用函数引用方式的setTimeout调用（这个曾在面试中遇到过，所以印象格外深刻）
+
+　　闭包通常的用法是为一个在某一函数执行前先执行的函数提供参数，例如在web环境中，一个函数作为setTimeout函数调用的第一个参数，是一种常见的应用
+
+　　原生的setTimeout有一个缺陷，就是传递的第一个参数不能够代带参数，即
+
+setTimeout(func(parma),1000)  // 这样的语句是不能生效的 
+
+但我们可以使用闭包来实现
+	function func(param) {
+    return function() {
+        alert(param);
+    }
+}
+var f = func(1)
+setTimeout(f, 1000);
+
+
+	常见浏览器个内核
+	Webkit内核
+	safari浏览器 苹果的浏览器
+	chrome 快捷稳定
+	
+	Trident内核
+	IE的浏览器
+	遨游浏览器
+	世界之窗
+	360浏览器
+	
+
+thi指向
+	1.函数调用
+	function fn(){
+console.log(this)}
+fn()
+大多数的时候回调函数最终都会被使用 函数调用(this指向window)
+callback&&callback()
+	2.方法调用
+	3.构造器调用
+	function fn(){
+	this.name = 'zs'
+	console.log(this)
+}
+	new fn()
+
+	4.上下文调用

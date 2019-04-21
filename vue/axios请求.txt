@@ -1,0 +1,41 @@
+vue-resource特点
+
+vue-resource插件具有以下特点：
+
+体积小
+vue-resource非常小巧，在压缩以后只有大约12KB，服务端启用gzip压缩后只有4.5KB大小，这远比jQuery的体积要小得多。
+支持主流的浏览器
+和Vue.js一样，vue-resource除了不支持IE 9以下的浏览器，其他主流的浏览器都支持。
+支持Promise API和URI Templates
+Promise是ES6的特性，Promise的中文含义为“先知”，Promise对象用于异步计算。
+URI Templates表示URI模板，有些类似于ASP.NET MVC的路由模板。
+支持拦截器
+	拦截器是全局的， 拦截器可以在请求发送前和发送请求后做一些处理
+	拦截器在一个场景下会非常有用，比如请求发送前在headers中设置access_token，或者在请求数据失败时，提供的处理方式
+
+vue2.0之后，就不再对vue-resource更新，而是推荐使用axios。基于 Promise 的 HTTP 请求客户端，可同时在浏览器和 Node.js 中使用。
+
+功能特性
+1、在浏览器中发送 XMLHttpRequests 请求
+2、在 node.js 中发送 http请求
+3、支持 Promise API
+4、拦截请求和响应
+5、转换请求和响应数据
+6、取消请求
+7、自动转换 JSON 数据
+8、客户端支持保护安全免受 CSRF/XSRF 攻击
+
+
+
+import axios from 'axios'
+axios.defaults.baseURL = "http://www.lovegf.cn:8888/api/private/v1"
+
+请求拦截
+//需要设置token值
+axios.interceptors.request.use(function(config) {
+    config.headers.Authorization = localStorage.getItem("token")
+    return config
+})
+
+响应拦截：在所有请求成功之后，后端响应数据在被获取之前
+	axios.interceptors.response.use(function(){})

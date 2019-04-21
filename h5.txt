@@ -1,0 +1,395 @@
+ 1.H5 不是新语言 而是html语言的第五次重大修改
+
+2.支持：所有主流的浏览器都支持h5(chrome,firefox,safari。。。)IE9及以上支持h5(有选择的支持，并不是全部支持)，但是IE8及以下不支持h5
+
+3.改变了用户与文档的交互方式 ：多媒体 video audio canvas
+使用时更加的方便
+
+ 4.增加了其他的一些新的特性：语义特性，本地存储特性，二维三维特效(过渡效果)
+
+
+新增的标签
+nav 表示导航
+header 表示页眉
+footer 表示页脚
+main 表示主题内容
+article 文章
+aside 主题内容之外
+footer 文档或者页的页脚
+但是html中只能有一个 不然样式容易混乱(相当于div 是一个行级元素)ie9（转换为块级元素） 
+只是看起来让人容易理解
+
+
+第一种手动创建 ：IE8 可以用js创建标签 但是也是块级元素（需要调价display:block）
+第二种直接引入文件使其兼容h5 引用方法和jq一样【常用】
+
+
+新增的type属性 
+ 邮箱 email 提供了默认的电子邮箱的完整验证 要求必须包含@符号，同时必须包含服务器名称 如果没有提交时不会弹出提示框 
+
+电话 tel 它并是不来实现验证的，他的本质目的是为了能够在移动端打开数字键盘，意味着数字键盘限制了用户只能输入数字；
+
+网址url 验证了合法的地址 必须包括 http:// 
+
+数量 number 只能输入数字(包含小数点) 而且有两个按钮可以实现加减 number 里面还有max属性和min属性
+语法 <input type="number" max ="100" min ="0" value ="60">
+上面的表单默认为60最大为100 最小为0.
+
+搜索商品名称 search 表单最右边提供了一键删除全部的小xx
+
+range范围 有最大值 和最小值 和默认值(和number差不大) 但是他显示的是一个推拉的滚动条
+
+颜色拾取 color 
+
+时间 time 时分秒
+
+日期 date 年月日 
+
+日期时间 datetime-local
+
+日期时间datetime大多数都不支持 只有苹果下面的safari支持
+
+月 month
+
+星期  week
+ 
+新增表单的属性
+
+placeholder 文字显示在文本里面但是不占位置 提示文本
+
+自动获取焦点 autofocus
+
+autocomplete 自动完成会获取以前提交过的值 ：on打开 ，off关闭
+有两个前提条件
+	1必须成功提交过：提交过
+	2当前添加了autocomplete的元素必须要有name属性
+
+验证手机号时
+	1.required:必须输入，没有输入会阻止数据的提交
+ 	2.pattern：正则表达式的验证  注意:不需要写// pattern="^(\+86)?1\d{10}$"【重点】
+
+选择多个文件file时 
+	1.可以使用multiple：选择多个 语法直接写不需要属性值
+	2.选择多个邮箱地址时也可以用multiple 但是两个邮箱之间要用逗号隔开(其余的都不可以)。
+
+当一个表单元素(input)不在form中时但又想在form提交时将外部的表单元素一起提交上去这时要用到form属性
+	1.form表单必须要有一个id值
+	2.form写在表单元素中属性值写想要一起提交的表单的id
+	
+
+新增的表单 【事件】
+	1.oninput:监听事件,监听当前元素内容的改变 ，只要内容改变(添加，删除内容)，就会触发这个事件
+	2.和onkeyup有什么不同点 onkeyup：当键盘弹起的时候触发，每弹起一次触发一次 不同点:鼠标复制粘贴的时候oninput会改变，而onkeyup不会改变因为没有弹起键盘 还有就是ctrl+v的时候
+onkeyup触发两次(因为弹起了两个键)而oninput只有一次(实用)
+
+oninvalid ：当验证不通过的时候触发
+this.setCustomValidity()设置默认的提示信息；
+
+
+h5中的两种进度条
+
+progress这是一个标签 max最大值 value：当前的进度值
+
+meter 度量器
+high 规定较高的值
+low 规定较低的值
+max 最大值
+min最小值
+value 当前度量值
+
+label可以for="id" 然后选中该id的东西 
+
+datalist 相当于下拉列表的的东西 里面的格式是用option
+调用是 list="id" 
+
+fieldset 当一组表单元素放到<fieldset> 标签内时 ，浏览器会以特殊的方式来显示他们，可能有特殊的边界，3D效果 。
+legend 和fieldset一起连用的 legend包裹的会显示在fieldset表单的边线里面
+	
+
+以前用用的是flash 要安装flash插件 
+	1.还要学习 
+	2苹果不支持flash
+所以h5新增的多媒体
+audio 音频
+用scr：引用 播放文件的路径 (默认不会显示)想要显示
+	1.需要添加controls:音频播放器的控制面板(进度控制不了，音量可以控制)
+	2.autoplay:自动播放 直接写(不需要属性值)
+	3.loop循环播放	直接写(不需要属性值)
+
+
+
+video 视频
+scr: 播放文件的路径
+	1.需要添加controls:音频播放器的控制面板 (进度控制不了，音量可以控制)
+	2.autoplay:自动播放 直接写(不需要属性值)
+	3.loop循环播放	直接写(不需要属性值)
+	4.有宽高 width和height 可以设置 一般只需要设置一个让其等比例缩放
+	5.poster 当视频还没有完全下载的，默认显示的画面，不写就是视频的第一幅画面
+
+【重点】但是每个浏览器支持的视频格式不一样 引出了
+	1.source 的使用 这个可以添加多个视频格式
+语法: 意思就是第一不支持看第二个支持。。。
+<video controls>
+	<source scr="路径/格式例如flv"></source>
+	<source scr="路径/格式例如MP4"></source>
+</video>
+	2.每个浏览器的视频显示是不同的
+
+
+dom操作
+一般我们获取多个相同的属性是取到一个伪数组然后使用索引来查找
+但是 索引;不直观 ，以后都是从后台动态获取的，前台动态生成的
+
+querySelector:query查询 selector 选择器
+querySelector:
+	1.获取单个元素，如果获取的元素不止一个，那么只会返回满足条件的第一个元素
+	2.参数要求,如果是类选择器 必须加. 如果是id选择器 必须加#
+	语法:var 变量名 = document.querySelector("类选择器/id选择器/标签名")
+	3.可以准确的找到数据而不是使用索引
+
+querySelectorAll(标签)可以获取全部的标签变为一个数组形式
+	
+
+实用的方法
+	1.add方法 为元素添加指定的样式，一次只能写一个
+	classList:当前元素的所有样式列表
+语法:document.querySelector("li").classList.add("red (这个里面只能是一个以声明的class类 不然就等于没添加 不能写空 会直接报错)")
+	2.remove:为元素移出指定名称的样式(样式)一次只能移出一个 只是移出class里面的属性值 是不移出class
+
+语法:document.querySelector("li").classList.remove("red")
+	3.toggle:切换元素的样式 ，如果元素之前没有指定名称的样式则添加，如果有则删除；（只能填写一个类名 需要实现类名间的切换建议用jq中的toggleClass方法）
+语法:document.querySelector("li").classList.remove("red")
+	4.contains:判断是否包括指定名称的样式，返回的是true和false
+语法:document.querySelector("li").classList.contains("red")
+
+获取样式 item
+语法:document.querySelector("li").classList.item(索引)
+
+
+自定义属性
+	1.定义data-开头
+	2.后必须至少有一个字符，多个单词连用用-链接
+建议；
+	1.名称应该都是用小写 --不要包含任何的大写字符
+	2.不要有任何的特殊字符
+	3.名称不要有纯数字
+语法 <p data-school-name="hah">你丑</p>
+取值 var p = document.querySelector("p")
+data-后面的单词使用驼峰命名法 不然会出错
+标签名.dataset["自定义属性名"]
+var value = p.dataset["schoolName"] 获取自定义属性值
+jq里面可以用 p.attr("school-name")
+js原生的 p.getattribute("school-name")
+
+addEventListener(事件名称，函数操作) 事件处理函数 这是js中的on是jq里面的
+
+
+ononline 网络连通的时候触发这个事件
+语法 window.addEventListener("online"，function(){})
+onoffline 网络断开时触发这个事件
+语法 indow.addEventListener("online"，function(){})
+
+全屏的主要方法和属性
+1.requestFullScreen():开启全屏显示
+	不同的浏览器需要的添加不同的前缀例如chorm webkit
+firfox:zom opera:o
+2.canceFullScreen() :退出全屏显示退出全屏 只能退出document
+语法document.querySelector("")
+3.fullScreenElement ：是否是全屏显示
+
+FileReader :读取文件内容
+1.readAsText():读取文本文件txt 返回字符串
+2.readAsBinaryString():可以读取任意类型的文件返回一个二进制的	字符串(0，1形式) 大多用于存储数据 0，1你呀看不懂
+3.readAsDataURL();读取文件获取一段data开头的字符串，这段字符串的本质就是DataURL。DataURL是一种将文件嵌入但文档的方案。
+4.abort() 中断读取
+onload:文件读取成功完成时触发
+onabort:读取文件中断片时触发
+onerror:读取错误时触发
+onload:文件读取成功完成时触发
+onloadend:读取完成时触发，无论成功还是失败
+onloadstart:开始读取时触发
+onprogress:读取文件过程中持续触发
+
+h5中如果要拖拽元素，就必须为元素添加draggable="true" 图片和超链接不用写
+
+拖拽元素的事件
+ondrag 应用拖拽元素 ，整个拖拽过程都会调用 持续触发
+ondragstart 当拖拽开始调用
+ondragleave 当师表离开拖拽元素时调用
+ondragend 当拖拽解释调用
+
+
+目标元素
+ondragenter 应用于目标元素 ,拖拽元素进去时调用
+ondragover 当停留在目标元素时调用
+ondrop 当在目标元素上松开鼠标时调用 但是浏览器默认会组织ondrop事件,我们必须在ondragover中组织默认行为
+语法: 目标元素.indragover = function(e){
+e.prevenDefault()} 但是只能清除这个目标元素的浏览器默认行为
+当在需要拖拽到其他地方时有需要重新添加 所以目标元素可以用document来替代
+
+ondragleave 当鼠标离开目标元素时调用
+
+获取拖拽的是哪一个元素
+语法document.ondragstart = function(e){
+	e.target  通过事件捕获来获取当前被拖拽的子元素
+}
+
+通过dataTransfer来实现数据的存储于获取
+setData(format,data);
+format 数据类型 text/html
+data 数据 一般来说是字符串值
+e.dataTransfer.setData("text/html",e.target.id)
+通过e.dataTransfer.setData 存储的数据只能在ondrop中取到
+var id = e.dataTransfer.getData("text/html")
+e.target.appendChild(document.getElementBuId(id))
+
+ 拖拽案例的基本实现步骤
+	 在html中文本是禁止拖拽的  在任意的 DOM 元素上启用 draggable 功能。通过鼠标点击并在视区中拖动来移动 draggable 对象 语法draggable ="true"  开始拖拽时 e.target 中id方法中记录了拖拽元素的id 用e.dataTransfer.setData("text/html",e.target.id)将id存储起来 方便后期的运用 第一个值是数据类型 
+     ondrop(鼠标松开始调用) 想要调用 该元素时需要在 ondragover(当停留在目标元素时调用) 就是当鼠标刚拖拽时就 组织了浏览器的默认行为 e.preventDefault(); 为什么要组织浏览器的默认行为 原因是ondrop默认被浏览器组织(不能用)
+    然后当鼠标松开的时候 将这个元素添加到目标元素中 因为在拖拽之前记录了 拖拽元素的id 所以用appendChild(如果该元素在dom树中一开始就存在的话 会将一开始的直接添加到目标元素 就是剪切的意思) 
+    【重点】 目标元素可以设置其范围 如果将其设置为document 意思就是在 document中随意拖动 想要在几个盒子里面拖动  可以设置一个较大盒子将其包裹起来 (没有缝隙 不然可能会拖到较大的盒子中 还可以设置margin值 也不会影响拖拽事件) 
+    细节 可以设置拖拽时的样式 e.target 这就是 拖拽时的目标元素 设置样式可以e.target.style.样式 进行设置
+	但是样式 拖拽时变化了 添加进去目标元素后应该还原其样式
+	 歧义 当把拖拽元素 添加给自己时会报错 因为append相当于剪切 把原始元素父级 当做子元素添加到自己种
+    新的子元素包含父元素 
+
+
+
+
+
+
+
+
+postion.coords.latitude 纬度
+
+position.coords.longitude 经度
+
+position.coords.accuracy 精度
+
+position.coods.altitude 海拔高度
+
+maximumAge 可以设置浏览器重新获取地理信息的时间
+
+timeout设置超时单位ms
+
+navigator.geolocation.getCurrenPosition(成功之后的回调函数去，失败之后的函数回调，)
+
+
+sessionStorage的使用：存储数据到本地。存储的容量在5mb左右
+	1.本质是存储到当前页面中
+	2.生命周期是当前页面的关闭 关闭页面 数据清除  
+
+	window.sessionStorage.setItem(key,value) 存储数据，以键值对的方式存储
+语法: 获取用户名(获取用户输出的数据)
+	var name = document.querySelector("标签或id").val()
+	存储数据
+	window.sessionStorage.setItem("属性名"，name(从上面获取的用户输入的属性))
+
+	getItem(key) 获取数据，通过指定名称的key获取对应的value
+语法: 获取数据
+	var name = window.sessionStorage.getItem("存储的属性名") (当没有该属性名是，那么机会获取null	)
+	
+	removeItem(key) 删除数据 ，通过指定的key
+语法 window.sessionStorage = removeItem("存储的属性名") (当没有该属性名的时候不会报错，但也不会删除数据)
+
+	clear() 清空所有存储内容
+
+
+locationStorage的使用：存储数据到本地。存储的容量在20km左右
+【重点】不同点
+	1.不同的浏览器不能共享数据。但是在同一个域名窗口中可以共享数据 
+	2.永久生效，他是存储在硬盘上，并不会随着页面或者浏览器的关闭而清除，如果想清除，必须手动清除
+	用法是一样的
+	window.localStorage.setItem(key,value) 存储数据，以键值对的方式存储
+语法: 获取用户名(获取用户输出的数据)
+	var name = document.querySelector("标签或id").val()
+	存储数据
+	window.locationStorage.setItem("属性名"，name(从上面获取的用户输入的属性))
+
+	getItem(key) 获取数据，通过指定名称的key获取对应的value
+语法: 获取数据
+	var name = window.locationStorage.getItem("存储的属性名") (当没有该属性名是，那么机会获取null	)
+	
+	removeItem(key) 删除数据 ，通过指定的key
+语法 window.locationStorage = removeItem("存储的属性名") (当没有该属性名的时候不会报错，但也不会删除数据)
+
+	clear() 清空所有存储内容
+----------------------------------------------------------------------------------------------------
+	window.sessionStorage 是window的一个属性 其中有setItem(添加 键值形式存在) getItem(获取存储的 属性名) 和removeItem(移出 属性名)  clear(清空) 
+    		在那个页面创建 就只能在这个页面运用 不常用  存储在页面中
+
+	window.localStorage 是window的一个属性 其中有setItem(添加 键值形式存在) getItem(获取存储的 属性名) 和removeItem(移出 属性名)  clear(清空) 
+    		因为有20mk的存储空间 一般可以用来存储一些缓存数据 进入网页时实现缓存 用来提高用户体验(这个文件存储浏览器的内存中 浏览器存储在本地的c盘中)  这个是永久存在 除非手动清除 不然他不会被清除  以字符串的形式存在 当不是字符串的时候 他会自动把你转化为字符串
+
+
+【重点】 应用缓存  运用 window.localStorage 也可以实现应用缓存 而且后期常用 window.localStorage (好处 不用再引入文件了)
+	1.概念：使用h5，同过创建cache manifest文件，可以轻松地创建web应用的离线版本
+语法 在h5中设置manifest = "应用程序缓存清单文件的路径，建议使用appcache"本事就是一用文本文件
+语法 <html lang = "en" manifest = "demo.appcache">
+在demo.appcache 的样式中
+第一句必须是
+CACHE MANIFEST(必须写第一句，前面不能写注释)
+#后面写注释
+需要缓存的文件清单
+CACHE
+下面就是需要缓存的清单列表
+../images/11.jpg (src后面的路径)
+标识出哪些文件需要缓存，可以是相对路径也可以是绝对路径。
+ *：代表所有文件
+
+配置每一次都需要重新从服务器获取的清单列表
+NETWORK 
+login.asp
+下面的代码 “login.asp” 永远不会被缓存，且离线时是不可用的：
+
+配置文件如果无法获取则用指定文件代替
+FALLBACK:
+如果无法建立因特网连接，则用 “404.html” 替代 /html5/ 目录中的所有文件。
+*.html /404.html 两个文件中间用空格隔开
+/代表所有文件
+
+声明manifest 文件需要配置正确的MIME-type即"text/cache-manifest".必须在web服务器上进行配置
+
+
+音频使用
+常用方法
+load()加载、play()播放 、pause()暂停
+jq里面没有 只能用原声js写
+
+如果是video.paused 是暂停 
+
+toggleClass(class,switch)对设置或移除被选择元素的一个或者多个类进行切换
+class  必需。规定添加或移除 class 的指定元素。
+如需规定若干 class，请使用空格来分隔类名。
+switch  可选。布尔值。规定是否添加或移除 class。 （jq里面的方法）
+toggleClass("fa-play fa-pause")
+
+
+
+全屏操作
+全屏不同浏览器需要添加不同的前缀>>能力测试
+if(video.requestFullScreen){
+                video.requestFullScreen();
+            }
+            else if(video.webkitRequestFullScreen){
+                video.webkitRequestFullScreen();
+            }
+            else if(video.mozRequestFullScreen){
+                video.mozRequestFullScreen();
+            }
+            else if(video.msRequestFullScreen){
+                video.msRequestFullScreen();
+            }
+
+常用事件
+	oncanplay：事件在用户可以开始播放视频/音频(audio/video)时触发。
+	ontimeupdate：通过该事件来报告当前的播放进度
+	onended：播放完时触发重置
+
+duration 获取总时长 以秒为单位 获取小数
+
+currentTime 属性设置或返回音频/视频播放的当前位置（以秒计）。 
+当currentTime改变时会触发ontimeupdate事件
+
+当实现播放业务过程中的业务逻辑，当视频播放时会触发ontimeupdate 事件
+

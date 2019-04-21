@@ -1,0 +1,293 @@
+AJAX
+	1.基于web标签xhtml+css
+	2.可以使用dom进行动态的显示和交互
+	3.使用xml和xslt(是一种用于将xml文档转换任意文本的描述语言)进行数据的交换和操作
+	4.使用XMLHttprequest 进行异步的数据查询和检索等操作
+
+ajax可以在页面不刷新的情况下，请求服务器 ，局部的更新页面.
+本质是在HTTP协议的基础上以异步的方式通过XMLHttpRequest对象与服务器进行通信
+
+同步：同时刻只能做一件事 例如你双手打字的时候不可能用手吃饭一样
+异步同时做多件事情,同一时间可以做多件事，例如你可以变吃饭边看电视(不过这个饭是别人喂你吃的！！！这个人就是XMLHttpRequest )    运用这个来XMLHttpRequest实现异步
+
+请求数据
+	1.请求行; 请求方式 是url，协议
+	2.请求头; 客户端发送给服务器的一些额外数据信息
+	3.请求体; 客户传递给服务器的数据
+
+
+异步对象的应用
+在事件中
+	1.获取用户数据
+语法：var name = this.value；
+	2.让一步对象发送请求
+	2.1创建异步对象
+语法: var xhr  =new XMLHttpRequest();
+	2.2设置请求行 open(请求方式,请求url[,true])
+true是异步的false是同步 默认为true 而且现在基本用的都是异步，不然也不会创建这个请求
+	get请求如果有参数就直接在url后面添加
+	post有参数需要在请求体中传递
+语法: xhr.open("get","validate.php?username="+name)
+	2.3设置请求头 setRequestHeader("key","value")键值对形式存在
+	get不需要设置请求头
+	post需要设置Content-Type:application/x-www-form-urlencoded
+	2.4 设置请求体：发送请求send(参数，key=value&key=value)
+	post应该在这里传递
+语法.send(null) 这是get请求
+
+报文行200 ok是正常的
+报文体  responseText:普通字符创 
+	responseXML：符合xml格式的字符串
+因为异步是同时进行的所以得判断请求是否完成
+	1.xhr.status;可以获取当前服务器的响应200 成功
+	2.一个真正成功的不仅在服务器端响应了，还要在客户端接收到了并且可以使用了
+	3.监听异步对象的响应状态 方法是readystate (有五个状态)
+		0;创建了异步对象但没发送请求
+		1;调用了send方法正在发送
+		2;send方法执行完毕了 已经收到服务器的响应内容--但还不可以使用
+		3;正在解析 返回的数据
+		4;响应内容解析完毕，可以使用了
+语法:xhr.onreadystatechange = function(){
+	xhr.state==200是当服务器响应了
+	xhr.readyState==4 客户端解析成功了 可以运用了
+	if(xhr.state==200&&xhr.readyState==4) {
+		输出返回的值
+		console.log(xhr.responseText);
+		输出到页面
+语法document.querySelector("显示数据的标签").innerHTML=xhr.responseText;
+}
+}
+
+后期引用json文件
+因为responsrText传入的是一个字符串 
+	1JSON.parse方法将json格式的字符串转化为js数组或者对象 用法和json_decode 方法的功能大致一样
+
+XML运用
+第一句必须是 不是就报错
+<?xml version="1.0" encoding="utf-8" ?>
+	1 必须有一个根元素
+	2 标签不可以有空格 不能用数字和特殊字符 ，区分大小写
+	3 不可以交叉嵌套 (不按规范写就是乱写)
+	4 属性双引号 (浏览器自动修正成为双引号)
+语法: <src>./images/1.png</src> 标签中自动添加了双引号
+	5 特殊符号要用实体
+语法: 空格&nbsp;
+	6 注释和HTML一样
+在XML中数组
+	<item>里面书写需要的数组</item> item相当于item[里面书写需要的数组]
+
+在XML php页面中引用的时候 默认返回的数据类型是
+	header("content-type:text/html;charset=utf-8")
+但是在XMl php中需要返回的是XML文件(不是text文件)引用
+header("content-type:application/xml;charset-utf-8")
+	【重点】这是后返回的数据是#document数据 获取可以直接用document.querySelector() dom方式获取
+
+判断某一个元素是不是一个数组中
+in_array(查询的元素，被查询的数组) 返回的是一个true或者false
+
+
+【重点】事件的执行
+1.向服务器请求html页面
+2.服务器返回所请求的html页面
+3.浏览器发现里面有相应的js代码 去执行
+4.让异步对象再次发送数据请求
+5.服务器会返回相应的数据
+6.在html页面中根据数据动态生成页面结构
+7.渲染显示
+
+获取响应头 判断是xml文件还是json文件
+xhr.getAllResponseHeaders:获取所有的响应头
+xhr.getResponseHeader("Content-Type") 获取当前的响应头
+
+封装函数
+
+jq里面有$.ajax 可以看 就不写了占地方
+
+
+
+JQ里面的ajax
+timeout 请求超时 单位毫秒 ( sleep(时间 单位秒) 线程暂停 )
+语法 $.ajax({timeout:3000,}) 
+dataType 服务器返回格式 (text / json / xml)
+
+请求失败之后的回调error
+语法 error :function (e){
+	if(e.statusText=="timeout") {alert("请求超时") }
+}
+
+发送请求之前的回调 
+boforeSend:function (){}
+success成功响应的调用 回调函数
+complete响应完成时调用(包括成功和失败) 回调函数
+
+array_rand(数组)随机生成指定数组长度内的	索引
+
+test:就是验证参数值是否与指定的正则匹配
+请求发送之前的回调函数
+beforeSend:function(){}
+jq里面的延时 delay(时间 单位毫秒)
+
+serialize() 可以通过表单序列化的方式来收集用户数据
+语法$("对象").serialize
+	1.这个方法是jq的方法，所以需要使用jq对象来调用
+	2.这个方法可以将表单中的所有name属性的表单元素的值收集，生成key=value&key=value 
+	3.在ajax中，支持两种格式的参数(1 对象 2.参数格式的字符串)
+
+test():检测字符串是否与指定的正则匹配，如果匹配返回true或者fase
+
+exec():检测字符串是否与指定的正则匹配，同时可以提取某些匹配的部分 正则表达式.exec(被查询的字符串)
+语法: reg.exec(str);  如果匹配到了内容，则返回数组，不然返回null
+
+1.创建一个合法源字符串规则的正则表达式
+2.调用exec方法
+3.实现返回值的接收--返回一个数组 指是匹配的正则
+4.如何实现提取：将你想要的字符串对应的正则表达式部分用()包含
+	提取数组的循序是从左到右，括号的循序
+
+模板在哪里创建
+	1.不能将模板字符串内容直接添加页面结构中，因为他会被浏览器解析
+	2.不能写成注释，不然后期不能用
+	3.我们在script标签中创建
+		3.1必须添加一个类型type="text/template; "，原则上可以设置为任意的浏览器不支持的类型
+		3.2 行业规范，一般会将类型设置为text/template; 设置了后，不会被浏览器解析
+		3.3 设置一个唯一的id方便后期的获取 (使用template时)
+
+模板如何创建
+	1.占位符可以采用<%=属性名称-值%>(写的和其他的结构不同，方便提取)
+	2.占位符中值的名称一定要参照数据的属性名称(一样最好)
+
+
+
+应用template模板
+	应用 引入文件(一个外部的文件和jq一样的引用)
+	编辑模板
+		<% %>
+	输出模板
+		对内容编码输出<%=content%>
+		不编码输出<%=#content%>
+	var html = template(模板id，数据(对象))
+	
+	1.如果数据(obj)是一个对象，直接用template(模板id，obj)
+	2.如果数据(obj)是一个数组，要转化为一个对象template(模板id，{"items":obj})
+	3.因为在模板中只能使用当前传入的对象属性，它会根据属性自动的去获取对应的值来使用
+语法var html = template("navTemp",obj)
+	
+template 简介语法
+循环语句 {{each items(对象的属性名(新建的)对应的属性值是整个数组) as 
+value(数组中的属性值(值是一个对象，想调用一个对象中的属性值，只需要对象.属性值(value.src))) 
+index(数组中的属性名)}}
+语法 {{each items as value index}}
+如果要调用对象中的属性值 
+	1.value.src
+	2.items[index].src
+
+判断语句{{if}}{{else if}} {{else}}{{/if}}
+	1.结束只需要写一个{{/if}} 和php中的代码化的if语句一样
+
+模板中的颜色设置是bgcolor
+
+最新升级的语法 {{each items}} 可以去掉as (彻底去掉)和value 和index也可以去掉 下面需要运用的时候写$value 和 $indexs
+	
+
+同源
+同源策略是浏览器的一种安全策略，所谓同源指定是 域名(地址名) 协议(http) 端口(80)完全相同
+
+跨域
+	1.不允许进行DOM操作
+	2.不能进行ajax请求
+
+服务器端跨域CORS跨域
+header("Access-Control-Allow-Origin:*");
+	*是允许任何域来访问的(一般很少用，有安全问题)
+header("Access-Control-Allow-Origin:http//www.xixi.com");
+	这是指定的域可以访问
+
+jsonp JSON with Padding
+1.原理解析
+	其本质是利用了<script></script>标签具有可跨域性的特性，由服务器端返回一个预先定义好的javascript函数的调用，将服务器数据以该函数参数的形式传递过来，次此方法需要前后端配合完成
+只能以GET方式请求
+
+前台请求时 后台以$_GET["callback"]的方式接收
+$callback = $_GET["callback"]
+读取数据 $data = file_get_contents("nav.json")
+返回调用函数的形式，只不过在这个形式中要传递前台需要的数据
+
+	
+echo $callback."(".$data.")" 拼接字符串 形式 abc()
+
+
+实现跨域请求 ：请求数据
+	1.href
+	2.src：img script 常用
+	下面我们利用script标签的src的天然跨域特性来实现跨域请求
+语法：<script src = "xixi.php"></script>
+
+【重点】 客户端发送异步对象后 处理异步对象的是php文件(后端)
+
+因为我们是使用script来发送请求的所以返回值默认会以script所支持的js来解析 就是返回一个js类型的文件
+通过src传递数也是?属性名=属性值(可以是一个函数返回值会自动调用script中的函数) 
+当建
+当数据类型是jsonp是 会动态创建一个src来发送数据
+
+
+js不能传参，php文件可以传参(只能传递静态参数)
+
+判断dataType是jsonp
+	1.创建script标签 这是一个异步请求
+语法 varscript = document.createElement("script")
+	2.为script标签设置一个src属性，同时在src中传入之后需要的使用的函数名
+语法 script.src = url+"?callback="+callback;
+	3.将生成的script标签添加到页面中
+	document.body.appendChild(script);
+
+jsonp的实现原理
+	1.主要利用了script标签天然的跨域特性来发送请求的
+	2.它的实现方式是: 在发送请求的时候传递一个函数名称给后台，后台返回一个这个函数的调用(函数名."(".data.")")调用内部拼接需要的参数
+语法:echo  text."(".data.")";
+【重点】为什么以一个函数调用的方式传递回来，因为他是一个异步请求，如果不是一个事件，是一个直接输出的话(因为客户端解析需要时间，所以输出容易为空) 当是函数事件时 只有函数调用才会执行(客户端响应后返回函数调用)
+
+ajax 有jsonp:属性名 是 php中$_GET获取属性值(函数)
+
+
+接口话开发
+	接口函数说明
+	以下的数据类型都是string
+	ak 必须是true 开发者密匙
+	location 必须是true 北京|上海
+	callback 将json格式返回通过callback函数返回jsonp功能
+	output 输出的数据格式默认为xml 想要输出json类型时，必须的把output转化为json 语法:output:json
+	dataType:想实现跨域请求的时候下jsonp类型
+
+xhr.timeout 设置超时
+	超时的监听事件xhr.ontineout = function(){} 当请求超时是就会被触发
+
+
+FormData 收集表单
+	1.提供一个新的内建对象，可用与管理表单数据
+	2.首先要获取一个表单元素(获取input内容时，必须要有name属性)
+	3.然后实例化时new FormData(form),将表单元素form传进去
+	4.会返回一个对象，此对象可以直接做为xhr.send(formData)的参数
+	5.此时我们的数据用的是二进制来传递的
+	6.注意我们这里只能以post形式传递，浏览器会自动为我们设置一个时候的请求头
+
+	1.获取表单
+语法	var myform = document.querySelector("表单id")
+
+	2.将表单作为参数传递，在创建formData对象的时候
+语法	var formdata = new FormData(myform)
+
+	3.生成的formData对象就可以直接作为异步对象的参数传递
+	xhr.send(formdata)
+	这个form表单
+	特点之一:可以自由的追加参数
+	formdata.append("属性名"，"属性值") 一键值对形式传递
+form中 就算是post请求也不写请求头 (默认会生成 自己在写会多)
+
+	监听文件上传的进度：这个监听必须在send之前设置
+	xhr.upload.onprogress = function(e){
+  var loaded = e.loaded;
+                    var total = e.total;
+                    var percentage = Math.floor	(loaded/total)*100+ "%";
+                    document.querySelector	("span").innerHTML = percentage;
+                    document.querySelector	(".in").style.width = percentage;
+}

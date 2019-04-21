@@ -1,0 +1,524 @@
+		vue  数据驱动视图
+	vue 的核心概念，就是让用户不在操作DOM元素，解放用户的双手，可以让程序员有更多的事件其 关注业务逻辑
+	框架:是一套完整的解决方案；对项目侵入性比较大，项目如果需要更换框架，则需要重新架构整个项目
+	
+	MVVM中的
+	M是前端视图层的概念，主要关注与视图分离，也就是说，MVVM把前端的视图层，分为了三部分Model，View VMVIewModel
+	M这里的M保存的是每个页面中单独的数据 
+	VM他是一个调度者，分隔了M和V每当V层想要获取后保存数据的时候，都要由VM做中间的处理
+	V就是每个页面的HTML结构
+
+
+Vue不提倡我们操作DOM元素  那我们是通过什么控制DOM元素呢
+Vue的指令其实就是将传统的DOM操作进行了封装 虚拟DOM(在内存中造作DOM 可以 提高性能) 
+
+vdom是在内存中定义了关于真正dom的一些关键属性(没有大量浏览器提供的属性)，这样生成了一个vdom结构，然后数据进行改变的时候，先去内存中改变vdom中的属性 浏览器再回将以改变的属性，重新渲染到真正的dom元素中 在这过程中 只改变修改的属性，其余没有修改的属性未有重新渲染 提高了直接操作dom的效率和性能
+
+
+	vue的操作步骤	
+	1.导入Vue的包
+	2.创建一个Vue的实例
+		当我们导入包之后，在浏览器的内存中，就多了一个Vue构造函数
+实例	var vm = new Vue({
+		ele:"#id", 这表示，当前我们new的这个Vue实例，要控制页面上的哪一个区域 区域就是 "#id"
+	})
+
+
+使用v-cloak 可以解决闪烁问题
+
+v-text 没有闪烁问题 会覆盖元素中原本的内容 但是插值表达式 只会替换自己的这个占位符{{mag}} 不会清空内容
+
+	上面的两个只会把数据当成文本来解析
+	v-html 会将数据当做html来解析 v-html='键名' 不能使用插值表达式表达
+
+	v-bind：是vue中提供绑定的指令
+
+
+注意：在VM实例当中，会监听自己身上 data中的所有数据的改变，只要数据-发生变化，就会自动把最新的数据，从data上同步到页面中去；【好处：程序员只需要关心数据，不需要考虑重新渲染页面】
+
+
+事件修饰符
+.stop 组织冒泡
+.prevent  组织默认事件
+  添加事件监听时使用事件捕获模式
+.self只当时事件在该元素本身(比如不是子元素) 触发时触发回调 
+但是点击子集时 给子级加.self事件 父级还是会触发事件
+.once 事件只触发一次
+
+vue中双向数据绑定 v-model
+
+v-bind 只能实现数据的单项绑定 从M自动绑定到V中 ，无法实现数据的双向绑定
+语法 v-bind:value='msg'
+其中M是数据库层  V数页面视图层
+
+v-model 实现双向绑定 可以实现表单元素中数据的双向绑定 当视图的数据发生改变会立即更新模型中的数据 当模型中的数据改变 视图中的数据也会相应的发生改变
+v-model='msg'
+
+
+
+Vue中使用class样式
+1.数组
+<h1 :class="['red', 'thin']"> </h1>
+
+2.数组中使用三元表达式
+<h1 :class="['red', 'thin', flag: 'active': '']"> </h1>
+
+3.数组中嵌套对象
+<h1 :class="['red', 'thin', {'active: flag'}]"> </h1>
+
+4.直接使用对象
+<h1 :class="{red: true,thin: true, active: true}"> </h1>
+
+
+使用内联样式  
+1.直接在元素上添加:style 
+当键符号时需要使用引号包裹 vue规定的
+<h1 :style="{ color: 'red', 'font-size': '40px' }"> 生而为人</h1>
+
+2.将样式对象，定义到data(vue中特定传递数据的模块)中，并直接引用到:style中
+data定义样式
+	data: {
+	h1StyleObj: {color: 'red', 'font-size': '40px'}
+}
+<h1:style="h1StyleObj">生而为人</h1>
+
+3.在:style中通过数组，引用多个data上的样式对象
+data定义样式
+	data: {
+	h1StyleObj1: {color: 'red', 'font-size': 
+'40px'},
+	h1StyleObj2: {fontStyle: 'italic'}
+}
+<h1:style="[h1StyleObj1,h1StyleOb2]">生而为人</h1>
+
+
+
+Vue指令 v-for 和key 属性
+1.迭代数组
+<p v-for="(item,i) in list">索引:{{i}} ---姓名: {{ item.name }} </p>
+
+
+
+2.迭代对象中的属性
+<p v-for="(item,i) in list">索引:{{i}} ---姓名: {{ item.name }} </p>
+
+ <div id="app">
+        <!-- 迭代数组 -->
+        <!-- <p v-for='item in list'> {{ item }}</p> -->
+        <!-- 迭代对象  第一个参数是键 第二个是值 第三个参数是索引-->
+        <!-- <p v-for='(val, key, i) in xixi'>{{val}} {{key}}</p> -->
+        <!-- 迭代数组 -->
+        <!-- <p v-for='count in 10'>{{count}}</p> -->
+    </div>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                list: [1, 2, 3, 4, 5, 6],
+                xixi: {
+                    name: 'huang',
+                    age: 18
+                }
+            }
+        })
+    </script>
+
+
+注意：v-for 循环的时候，key属性只能使用 number获取string
+
+key的作用
+	1.key属性可以将dom和数据进行关联邦联，是dom具有唯一新，防止添加数据时页面结构的错乱
+	2.key属性可以提高v-for渲染结构的性能
+
+注意key 在使用的时候 ，必须使用v-bind属性绑定的形式，指定key的值
+
+在组件中，使用v-for循环的时候。或者在一些特殊的情况中，如果v-for有问题必须在使用v-for的同时 指定唯一的字符串/数字类型 :key值
+
+	v-if的特点：每次都会重新删除或者创建元素 有较高的切换性能消耗问题
+	v-show的特点： 每次都不会重新进行DOM的删除和创建操作，只是切换了元素的dispaly: none 样式 有较高的初始渲染消耗
+
+
+vue过滤器
+过滤器只能使用在两个地方一个就是插值表达式，第二个就是v-bind表达式
+全局过滤器可以在全局使用
+Vue.filter('过滤器的名称',function(data){}) 第一个数据永远是传递过来的数据 也就是你要改变的原始内容 还有第二个或第三个参数 来自过滤器的传值
+
+私有过滤器
+ let vm = new Vue({
+            el: '#app',
+            data: {
+            },
+            methods: {
+            },
+            filters: {定义私有的过滤器有两个条件 过滤器名称和处理函数}
+        })
+过滤器采用就近原则 优先调用自己的过滤器
+
+
+
+toLowerCase()方法是 将被调用的字符转化为小写
+
+自定义全局按键修饰符
+Vue.config.keyCodes.f2 = 113
+
+全部的键盘码值
+.enter
+.tab
+.delete
+.space
+.up
+.down
+.left
+.right
+
+Vue.directive() 定义全局的指令 第一个参数是 指令的名称 注意，在定义的名称面前不需要添加v-前缀 ，但是在调用之前加v- 系统前置需要添加的 第二个参数。，是一个对象，这个对象身上，有一些相关的函数 ，这些函数可以在特定的阶段执行
+
+重要的三个
+bind: function(el){ el是被绑定的元素 el就相当于一个js对象
+},//每当指令绑定到元素的时候，会立即执行这个bind函数，只执行一次 样式可以使用bind  
+
+inserted: function(el){
+	el.focus()
+},//inserted表示元素 插入到DOM中的时候，会执行inserted函数 触发一次  和js行为有关的在inserted中执行
+
+updated: function(){} 当VNode更新的时候会执行update可能会触发多次
+
+钩子函数参数
+el 指令所绑定的元素，可以直接操作DOM
+binding：一个对象，包含以下属性
+name：指令明 不包括 v- 前缀
+value：指令的绑定值 例如v-my = '1+1' value的值是2
+expression 绑定值的字符串形式，例如v-my = '1+1' expression的值
+
+
+为'1+1'
+
+Vue中的生命周期函数 会自动执行 不同的时间段执行不同的函数
+生命周期钩子 = 生命周期函数 = 生命周期事件
+
+		创建期间的生命周期函数
+	1.beforeCreate：实例刚在内存中被创建出来，此时。 还没有初始好 data 和methods属性
+	2.created: 实例已经在内存中创建OK，此时data和methods已经创建OK，此时还没有还是编译模板 应用场景 需要请求数据的时候
+	3.beforeMount： 此时已经完成了模板的编译，在内存中编译好了，但是还没有挂载到页面中
+	4.mounted：此时，将已经编译好的模块，挂载到页面指定的容易中显示	 应用场景 凡是需要使用真实的DOM进行初始化的地方都要在这个地方写
+
+
+		运行期间的生命周期函数
+	1.beforeUpdate：  状态更新之前执行此函数，此时data中的状态值是最新的，但是界面上显示的数据还是旧数据，因为此时还没有开始重新渲染DOM节点
+
+	2.updated：实例更新完毕之后调用此函数，此时data之中的状态值和界面上显示的数据都已经完成更新了 监听数据的变化
+	应用场景：可以监听数据的变化，根据数据的变化再去处理其他业务逻辑
+
+ 
+		销毁期间的生命周期函数
+	1.befoerDestroy: 实例销毁之前调用，在这一步，实例任然可以使用
+	2.destroyed：Vue实例销毁后调用，调用后，Vue实例指示的所有东西都会解板顶，所有事件都会被移除。所有的字实例也会被销毁
+
+
+	发送ajax请求
+vue-resource之外，还可以使用`axios`的第三方包实现数据的请求
+
+手动发起的Post请求，默认没有表单格式，所以，有些浏览器处理不了 application/x-www-form-urlencoded
+
+
+	引用vue-resource.min.js 包
+	get请求
+	this.$http.get('url').then(truebackcall, falsebackcall) 使用了promise封装的
+
+	post请求
+	this.$http.post('url', {body 需要传递的数据} , {emulateJSON: true}).then(truebackcall, falsebackcall)
+
+	jsonp请求
+	this.$http.jsonp('url').then(truebackcall, falsebackcall) 使用了promise封装的
+
+
+		Vue中的动画
+	v-enter 动画开始之前
+	v-enter-to  动画进入的结束状态
+	v-enter-active 动画进入的时间段
+
+	v-leave 动画离开的起始状态
+	v-leave-to 动画离开的结束状态
+	v-leave-active 动画离开的时间段
+
+使用方法 
+	把需要进行过渡的元素使用
+        <transition>
+        </transition> 包裹
+.v-enter,
+.v-leave-to {
+        opacity: 0;
+        transform: translateX(200px)
+    }
+.v-enter-active,
+.v-leave-active {
+        transition: all 1s ease;
+    }
+可以自定义前缀名（v-）
+
+        <transition name='wo'>
+定义name之后 前缀就不在是v-了而是wo-
+
+还可以使用第三方插件
+
+
+	动画的javascript钩子
+<transition>
+	v-on:before-enter="beforeEnter" 进入之前 可以设置 初始位置
+	v-on:enter="enter" 进入结束 可以设置结束位置和过渡效果 
+	v-on:after-enter="afterEnter"
+	v-on:enter-cancellde="enterCancelled"没什么用
+</transition>
+	
+
+删除时，实现下面数据慢慢过渡上去的效果
+.v-move {
+        transition: all 0.8s ease;
+    }
+    .v-leave-active {
+       position: absolute;
+    }
+.v-move 是当数据移动时候的效果 
+但是必须设置.v-leave-active 当设置了position: absolute;的时候需要设置样式的宽度，因为是绝对定位不设置宽度时，就是内容的宽度
+
+添加appear 实现页面入场动画
+可以在        <transition-group tag="ul">
+        
+        </transition-group>
+
+	定义Vue组件
+	模块化：是从代码逻辑的角度进行划分的：方便代码分层开发，保证每一个功能模块的职能单一
+	组件化：是从UI界面的角度进行划分的：前端的组件化，方便UI组件的重用
+
+	1.定义组件的第一种方法
+	使用Vue.extend 来创建全局的vue组件
+var coml = Vue.extend({
+	template: "<h3>组件</h3>"
+})
+	使用vue.component('组件的名称','创建出来的组件模板对象')
+Vue.component('mycoml', coml)
+在body中之间使用
+<mycoml></mycoml>
+
+	组件终极奥义
+    Vue.component('mycoml', {
+                template: "#xixi"
+            })
+ <template id="xixi">
+        <div>
+                <h3>生而为人</h3>
+		<span>和平</span>
+        </div>
+  </template>
+
+	1.组件中可以有自己的data
+	2.组件的data和实例的data不一样，实例中的data可以为一个对象，但是组件必须是一个方法
+	3.组件中的data 方法还必须retuan 对象
+	4.组件中的data数据和实例中的使用方式一样
+
+axios的使用方法
+
+    <script src="./lib/axios-master/dist/axios.js"></script>
+ axios.get('http://www.lovegf.cn:8899/api/getprodlist').then(result => {}
+
+配置根路径 axios.defaults.baseURL="url"
+
+	组件中的不能是一个对象 如果写成对象，则会出现修改了组件的数据，其他使用该组件的地方也会改变
+	为什么使用函数返回一个对象 因为当每个自检调用数据的时候都会调用该函数 返回一个创新的值，每个对象互不影响
+
+父组件给子组件传值
+<wo  v-bind:fuzhi="msg">
+
+components: {
+                wo: {
+                    template: "<h1>子组件的元素 --- {{ fuzhi }} {{ name }}</h1>",
+                    props: ['fuzhi']
+                }, 
+            }
+
+dom元素的获取和组件的获取
+
+
+后端路由：监听网络请求，根据请求处理相关业务逻辑，将数据响应带客户端
+前端路由： 监听浏览器的hash值的变化，根据hash的切换展示不同的组件，使用前端路由书写的页面都叫做单页面(spa)
+
+路由的运用
+ //1.创建模板
+//2.创建路由
+//3.在vue实例挂在实例
+4. 应用模板 
+5.对应去响应的页面 <router-link to="info"> 一首歌的名字</router-link>
+var login = {
+         template: '<h1>登录页面</h1>'
+        }
+
+	var routerObj = new VueRouter({
+	routes: [
+	{path: '/login', componment: login}
+]
+})
+还要在Vue实例上写入router: routerObj, 
+
+redirect: 重定向 路径
+{path: '/', redirect: '/login'}
+
+路由的高亮
+router-link-active 在样式中直接设置(路由模板自己奢姿的即为选中的时候特有的类) 
+
+在路由中这只特有的类 
+ linkActiveClass : "my"  这是选中时候的 并且可以重新定义类名
+还可以自定义类名 在路由实例中定义
+linkActiveClass: '自定义的类名'
+
+路由传参 query 
+在子组件实例中有this.$route  $route这个和$refs 样式都是实例自带的属性 其中$route 有一个path是路径("/login") 不带参数的 还有就只有参数的 以对象形式存在 可以this.$route.query.id
+
+路由的嵌套
+{path: '/account', component: account, children: 
+[{path: 'login', component: login}]
+}
+
+vue中的单项数据流，是指父组件给子组件传值数据，只能单项绑定
+子组件需要使用props重新再子组件中定义传递过来的数据，父组件传递的数据是只读的，不能对其进行修改。
+自上至下的传输方式叫做单项数据流
+
+使用多个组件同一页面
+ {path: '/', components: {
+                    'default': boxMain, default 默认的
+                    'left': boxLeft, 
+                    'right': boxRight
+                }}
+下面与上面一一对应
+<router-view ></router-view>
+<router-view name="left"></router-view>
+<router-view name="right"></router-view>
+
+query传参(查询字符串)
+	1.在url后面拼接类似以/login?name=huang&age=20
+	2.直接在模板中使用$route.query.id 来使用
+
+
+params传参(restful API)
+	1.在url后面传递参数 如/login/10
+	2.匹配路径也需更改  需要/login/:id
+	3.在模板页面使用需要{{$route.params.id}}
+	注意这里的$route 是没有r的
+
+
+
+组件传值
+父向子传值
+1.属性绑定 v-bind propas接收数据 (单向数据流)
+2.this.$parent
+
+子向父传值
+1.事件绑定 @fn='func' this.$emit('fn',data) 通过调用方法 参数传值
+2. 子组件this.parent获取父组件的实例对象，通过调用父组件的方法调用	
+3.父组件中调用this.$refs.子组件名 获取到了子组件的实例对象
+
+想在组件内部写入文件(直接写会被模板内容替换) 这时候就需要使用到插槽 
+用法 在模板(template)中<slot></slot>	
+
+监听事件
+watch事事件 可以用来监听路由地址参数的改变
+watch: {
+                '$route.path': function(newVal) {
+                    if(newVal == '/login') {
+                        console.log('欢迎来到登录页面')
+                    } else if (newVal == '/register') {
+                        console.log('欢迎来到注册页面')
+                    }
+                }
+            }
+
+当监听的类型是一个复杂类型的时候 需要
+watch: {
+                "user": {
+		handler: function(newval) {
+		console.log(newval) 这个是数据改变之后user
+ 		},
+		deep:true
+            }
+
+计算属性 computed : {
+	在computed中，可以定义一些属性，这些属性，叫做计算属性，计算属性的本质就是一个方法，只不过，我们在使用这些计算属性的时候 是吧他们的名称，直接当做属性来使用： 并不会吧计算属性，当做方法去调用
+	1.注意，只要是计算属性内部函数中的数据发生改变，就会重新计算这个属性值 
+	也就等于当计算属性内部值发生改变的时候 函数重新调用
+	在页面中可以直接使用：绑定使用或者使用插值表达式来使用
+	2.注意：计算属性的求值结果，会被缓存起来，方便下载使;如果 计算属性方法中，没有任何改变，则不会重新对计算属性求值()
+	finalName(){
+	return this.firstName + this.lastName
+}
+}
+
+watch 、computed methods 之间的对比
+	1.computed属性的结果会被缓存，从除非依赖的响应式属性变化才会重新计算，主要当做属性来使用
+	2.methods方法便是一个具体的造作，主要书写业务逻辑
+	3.watch一个对象，键是需要观察的表达式，值是对应的回调函数，主要某些待定数据的变化，从而进行某些具体业务逻辑操作，可以看做是computed和methods的结合体
+
+
+解决网页加载速度慢
+	可以使用合并、压缩、精灵图、图片的base64编码
+要处理错综复杂的依赖关系
+	可以使用之前学过的requireJS，也可以使用webpack解决各个包之间的复杂依赖关系
+
+
+webpack
+	使用一个main.js在这里面导入所有包文件 页面中只导入main.js 可以解决二次加载(加载不同文件)时速度慢的问题
+	main中有独有的引入包的方法(固定的方法)
+	import *** from *** 是ES6中导入模块的方式.
+	但是这种写法浏览器解析不了 需要使用webpack初始化一下
+	import $ from 'jquery'相当于node中的
+	const $ = require('jquery').
+
+	webpack能干什么
+	1.webpack能处理JS文件的相互依赖关系
+	2.webpack能够处理JS的兼容性问题把 高级的，浏览器不是别的语法，转化为低级的，浏览器能正常识别的语法 
+
+	使用webpack-dev-server这个工具可以帮忙打包js文件
+这个打包好的文件时以一种虚拟的形式，托管到了咱们项目的目录中 他是存储在电脑的内存中，只要数据改变浏览器就根据内存的中数据中的改变而改变(自动刷新页面)
+
+更改配置项 package.json
+在  "scripts": {
+    
+		"test": "echo \"Error: no test specified\" && exit 1",
+    
+		"dev": "webpack-dev-server --open --port 3000"
+  },
+添加一个"dev" 可以使用 npm run dev调用
+	第一个参数webpack-dev-server 是要运行的包
+	第二个参数--open自动打开保存并生成的页面
+	第三个参数 --port 3000 更改端口号
+	第四个参数 --contentBase src 以src为根路径打开
+	第五个参数 --hot 可以实现页面无数新改变数据 且当你改变数据的时候他不会重新生成数据 只是将你改变的数据，改变了而已(可以看做当成一个补丁添加进去了)
+	
+
+	引用css样式
+	1.需要index.js在中先 引用需要的css文件
+	2.下载两个包 npm i style-loader css-loader -D
+	3.然后在	webpack.config.js 更改配置项，使当文件引用了css文件的时候 调用我们下载下来的包
+	 module: {
+        rules: [
+            {test: /\.css$/, use: ['style-loader', 'css-loader']}
+        ]
+    	}
+
+{test: /\.(jpg|png|jpeg|gif|bmp)$/, use: 'url-loader?limit=7777'}
+	配置选项中可以直接进行传参 和地址栏传参一样 当匹配图片的时候文件大于或等于规定的值是(单位byte)，则不会转化为base64编码格式
+	这样设置出来的不是原来的名字如果需要使用原来的名字
+{test: /\.(jpg|png|jpeg|gif|bmp)$/, use: 'url-loader?limit=7777&name=[hash:8]-[name].[ext]'}
+	但是这样话当项目中有图片文件重名 就只会使用后面引用的图片 因为他是存在目录内存中声明的当有重名的后面的就是把前面的替换掉 可以在前面多添加一个hash值(可以避免文件名的重复)
+
+	class关键字，是ES6中提供的新语法，是用来 实现 ES6中面向对象编程的方式
+
+	class Person {
+	使用static关键字，
+	可以定义静态属性 所谓的静态属就是 可以直接通过类名，直接访问的属性 (可以通过类名点属性名)
+	实例属性：只能通过类的实例，来访问的属性，叫做实例属性 
+	
+	static info = { name: 'zs', age: 20 }
+}
+	let wo = new Person() 
+	实例属性是通过wo这个实例来调用的
+
+	webpack中，默认只嗯呢该处理 一部分ES6的新语法。一些更高级的ES6语法或者ES7语法， webpack是处理不了的；这时候，就需要 借助于第三方的loader，来帮助webpack处理这些高级的语法

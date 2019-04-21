@@ -1,0 +1,309 @@
+		vue  数据驱动视图
+	vue 的核心概念，就是让用户不在操作DOM元素，解放用户的双手，可以让程序员有更多的事件其 关注业务逻辑
+	框架:是一套完整的解决方案；对项目侵入性比较大，项目如果需要更换框架，则需要重新架构整个项目
+	
+	MVVM中的
+	M是前端视图层的概念，主要关注与视图分离，也就是说，MVVM把前端的视图层，分为了三部分Model，View VMVIewModel
+	M这里的M保存的是每个页面中单独的数据 
+	VM他是一个调度者，分隔了M和V每当V层想要获取后保存数据的时候，都要由VM做中间的处理
+	V就是每个页面的HTML结构
+
+
+Vue不提倡我们操作DOM元素  那我们是通过什么控制DOM元素呢
+Vue的指令其实就是将传统的DOM操作进行了封装 虚拟DOM(在内存中造作DOM 可以 提高性能) 
+
+vdom是在内存中定义了关于真正dom的一些关键属性(没有大量浏览器提供的属性)，这样生成了一个vdom结构，然后数据进行改变的时候，先去内存中改变vdom中的属性 浏览器再回将以改变的属性，重新渲染到真正的dom元素中 在这过程中 只改变修改的属性，其余没有修改的属性未有重新渲染 提高了直接操作dom的效率和性能
+
+
+	vue的操作步骤	
+	1.导入Vue的包
+	2.创建一个Vue的实例
+		当我们导入包之后，在浏览器的内存中，就多了一个Vue构造函数
+实例	var vm = new Vue({
+		ele:"#id", 这表示，当前我们new的这个Vue实例，要控制页面上的哪一个区域 区域就是 "#id"
+	})
+
+
+使用v-cloak 可以解决闪烁问题
+
+v-text 没有闪烁问题 会覆盖元素中原本的内容 但是插值表达式 只会替换自己的这个占位符{{mag}} 不会清空内容
+
+	上面的两个只会把数据当成文本来解析
+	v-html 会将数据当做html来解析 v-html='键名' 不能使用插值表达式表达
+
+	v-bind：是vue中提供绑定的指令
+
+
+注意：在VM实例当中，会监听自己身上 data中的所有数据的改变，只要数据-发生变化，就会自动把最新的数据，从data上同步到页面中去；【好处：程序员只需要关心数据，不需要考虑重新渲染页面】
+
+
+事件修饰符
+.stop 组织冒泡
+.prevent  组织默认事件
+  添加事件监听时使用事件捕获模式
+.self只当时事件在该元素本身(比如不是子元素) 触发时触发回调 
+但是点击子集时 给子级加.self事件 父级还是会触发事件
+.once 事件只触发一次
+
+vue中双向数据绑定 v-model
+
+v-bind 只能实现数据的单项绑定 从M自动绑定到V中 ，无法实现数据的双向绑定
+语法 v-bind:value='msg'
+其中M是数据库层  V数页面视图层
+
+v-model 实现双向绑定 可以实现表单元素中数据的双向绑定 当视图的数据发生改变会立即更新模型中的数据 当模型中的数据改变 视图中的数据也会相应的发生改变
+v-model='msg'
+
+
+
+Vue中使用class样式
+1.数组
+<h1 :class="['red', 'thin']"> </h1>
+
+2.数组中使用三元表达式
+<h1 :class="['red', 'thin', flag: 'active': '']"> </h1>
+
+3.数组中嵌套对象
+<h1 :class="['red', 'thin', {'active: flag'}]"> </h1>
+
+4.直接使用对象
+<h1 :class="{red: true,thin: true, active: true}"> </h1>
+
+
+使用内联样式  
+1.直接在元素上添加:style 
+当键符号时需要使用引号包裹 vue规定的
+<h1 :style="{ color: 'red', 'font-size': '40px' }"> 生而为人</h1>
+
+2.将样式对象，定义到data(vue中特定传递数据的模块)中，并直接引用到:style中
+data定义样式
+	data: {
+	h1StyleObj: {color: 'red', 'font-size': '40px'}
+}
+<h1:style="h1StyleObj">生而为人</h1>
+
+3.在:style中通过数组，引用多个data上的样式对象
+data定义样式
+	data: {
+	h1StyleObj1: {color: 'red', 'font-size': 
+'40px'},
+	h1StyleObj2: {fontStyle: 'italic'}
+}
+<h1:style="[h1StyleObj1,h1StyleOb2]">生而为人</h1>
+
+
+
+Vue指令 v-for 和key 属性
+1.迭代数组
+<p v-for="(item,i) in list">索引:{{i}} ---姓名: {{ item.name }} </p>
+
+
+
+2.迭代对象中的属性
+<p v-for="(item,i) in list">索引:{{i}} ---姓名: {{ item.name }} </p>
+
+ <div id="app">
+        <!-- 迭代数组 -->
+        <!-- <p v-for='item in list'> {{ item }}</p> -->
+        <!-- 迭代对象  第一个参数是键 第二个是值 第三个参数是索引-->
+        <!-- <p v-for='(val, key, i) in xixi'>{{val}} {{key}}</p> -->
+        <!-- 迭代数组 -->
+        <!-- <p v-for='count in 10'>{{count}}</p> -->
+    </div>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                list: [1, 2, 3, 4, 5, 6],
+                xixi: {
+                    name: 'huang',
+                    age: 18
+                }
+            }
+        })
+    </script>
+
+
+注意：v-for 循环的时候，key属性只能使用 number获取string
+
+key的作用
+	1.key属性可以将dom和数据进行关联邦联，是dom具有唯一新，防止添加数据时页面结构的错乱
+	2.key属性可以提高v-for渲染结构的性能
+
+注意key 在使用的时候 ，必须使用v-bind属性绑定的形式，指定key的值
+
+在组件中，使用v-for循环的时候。或者在一些特殊的情况中，如果v-for有问题必须在使用v-for的同时 指定唯一的字符串/数字类型 :key值
+
+	v-if的特点：每次都会重新删除或者创建元素 有较高的切换性能消耗问题
+	v-show的特点： 每次都不会重新进行DOM的删除和创建操作，只是切换了元素的dispaly: none 样式 有较高的初始渲染消耗
+
+
+	vue过滤器
+过滤器只能使用在两个地方一个就是插值表达式，第二个就是v-bind表达式
+全局过滤器可以在全局使用
+Vue.filter('过滤器的名称',function(data){}) 第一个数据永远是传递过来的数据 也就是你要改变的原始内容 还有第二个或第三个参数 来自过滤器的传值
+
+私有过滤器
+ let vm = new Vue({
+            el: '#app',
+            data: {
+            },
+            methods: {
+            },
+            filters: {定义私有的过滤器有两个条件 过滤器名称和处理函数}
+        })
+过滤器采用就近原则 优先调用自己的过滤器
+
+
+
+toLowerCase()方法是 将被调用的字符转化为小写
+
+自定义全局按键修饰符
+Vue.config.keyCodes.f2 = 113
+
+全部的键盘码值
+.enter
+.tab
+.delete
+.space
+.up
+.down
+.left
+.right
+
+Vue.directive() 定义全局的指令 第一个参数是 指令的名称 注意，在定义的名称面前不需要添加v-前缀 ，但是在调用之前加v- 系统前置需要添加的 第二个参数。，是一个对象，这个对象身上，有一些相关的函数 ，这些函数可以在特定的阶段执行
+
+重要的三个
+bind: function(el){ el是被绑定的元素 el就相当于一个js对象
+},//每当指令绑定到元素的时候，会立即执行这个bind函数，只执行一次 样式可以使用bind  
+
+inserted: function(el){
+	el.focus()
+},//inserted表示元素 插入到DOM中的时候，会执行inserted函数 触发一次  和js行为有关的在inserted中执行
+
+updated: function(){} 当VNode更新的时候会执行update可能会触发多次
+
+钩子函数参数
+el 指令所绑定的元素，可以直接操作DOM
+binding：一个对象，包含以下属性
+name：指令明 不包括 v- 前缀
+value：指令的绑定值 例如v-my = '1+1' value的值是2
+expression 绑定值的字符串形式，例如v-my = '1+1' expression的值
+
+
+为'1+1'
+
+Vue中的生命周期函数 会自动执行 不同的时间段执行不同的函数
+生命周期钩子 = 生命周期函数 = 生命周期事件
+
+		创建期间的生命周期函数
+	1.beforeCreate：实例刚在内存中被创建出来，此时。 还没有初始好 data 和methods属性
+	2.created: 实例已经在内存中创建OK，此时data和methods已经创建OK，此时还没有还是编译模板 应用场景 需要请求数据的时候
+	3.beforeMount： 此时已经完成了模板的编译，在内存中编译好了，但是还没有挂载到页面中
+	4.mounted：此时，将已经编译好的模块，挂载到页面指定的容易中显示	 应用场景 凡是需要使用真实的DOM进行初始化的地方都要在这个地方写
+
+
+		运行期间的生命周期函数
+	1.beforeUpdate：  状态更新之前执行此函数，此时data中的状态值是最新的，但是界面上显示的数据还是旧数据，因为此时还没有开始重新渲染DOM节点
+
+	2.updated：实例更新完毕之后调用此函数，此时data之中的状态值和界面上显示的数据都已经完成更新了 监听数据的变化
+	应用场景：可以监听数据的变化，根据数据的变化再去处理其他业务逻辑
+
+ 
+		销毁期间的生命周期函数
+	1.befoerDestroy: 实例销毁之前调用，在这一步，实例任然可以使用
+	2.destroyed：Vue实例销毁后调用，调用后，Vue实例指示的所有东西都会解板顶，所有事件都会被移除。所有的字实例也会被销毁
+
+
+	发送ajax请求
+vue-resource之外，还可以使用`axios`的第三方包实现数据的请求
+
+手动发起的Post请求，默认没有表单格式，所以，有些浏览器处理不了 application/x-www-form-urlencoded
+
+
+	引用vue-resource.min.js 包
+	get请求
+	this.$http.get('url').then(truebackcall, falsebackcall) 使用了promise封装的
+
+	post请求
+	this.$http.post('url', {body 需要传递的数据} , {emulateJSON: true}).then(truebackcall, falsebackcall)
+
+	jsonp请求
+	this.$http.jsonp('url').then(truebackcall, falsebackcall) 使用了promise封装的
+
+
+		Vue中的动画
+	v-enter 动画开始之前
+	v-enter-to  动画进入的结束状态
+	v-enter-active 动画进入的时间段
+
+	v-leave 动画离开的起始状态
+	v-leave-to 动画离开的结束状态
+	v-leave-active 动画离开的时间段
+
+使用方法 
+	把需要进行过渡的元素使用
+        <transition>
+        </transition> 包裹
+.v-enter,
+.v-leave-to {
+        opacity: 0;
+        transform: translateX(200px)
+    }
+.v-enter-active,
+.v-leave-active {
+        transition: all 1s ease;
+    }
+可以自定义前缀名（v-）
+
+        <transition name='wo'>
+定义name之后 前缀就不在是v-了而是wo-
+
+还可以使用第三方插件
+
+
+	动画的javascript钩子
+<transition
+	@before-enter="beforeEnter" 进入之前 可以设置 初始位置
+	@enter="enter" 进入结束 可以设置结束位置和过渡效果 
+	@after-enter="afterEnter"
+	@enter-cancellde="enterCancelled"没什么用
+>
+	【注意】函数是写在<transition 这里面的> 不是写在尖括号外面
+	
+</transition>
+	
+
+删除时，实现下面数据慢慢过渡上去的效果
+.v-move {
+        transition: all 0.8s ease;
+    }
+    .v-leave-active {
+       position: absolute;
+    }
+.v-move 是当数据移动时候的效果 
+但是必须设置.v-leave-active 当设置了position: absolute;的时候需要设置样式的宽度，因为是绝对定位不设置宽度时，就是内容的宽度
+
+添加appear 实现页面入场动画
+可以在        <transition-group tag="ul">
+        
+        </transition-group>
+	
+	domObject.getBoundingClientRect()
+	有四个属性left right top botton
+
+	
+	【双向数据绑定】vue响应原理，数据劫持 + 发布订阅者模式
+	模型数据发生改变会自动更新视图：vue实例中所有属性都是通过Object.defineProper()
+	只要数据发生改变就会触发set方法，在set方法中通知视同更新
+	Object,defineProperty(obj, 'name', {
+		获取属性值
+		get(){ return 1 },
+		设置属性值
+		set(value){
+		username = value}
+	})
+	console.log(obj.name) // 1
+	
+
+	视图更新，影响模型：监听表单的change事件

@@ -1,0 +1,4 @@
+可以在src中新建一个api端口
+可以使用export function() {
+ 	return axios.get('')
+}

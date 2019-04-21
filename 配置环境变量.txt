@@ -1,0 +1,10 @@
+window + r
+输入sysdm.cpl
+高级 - 环境变量
+
+系统变量
+双击 path
+新建  
+D:\node\
+D:\Git\cmd （下载的根路径）
+确定

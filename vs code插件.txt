@@ -1,0 +1,8 @@
+Preview on Web Server 使用浏览器打开(不是本地打开)
+Easy less 可以将less转化为css
+Vue 2 Snippets
+View In Browser
+Terminal
+snippent-creator
+open in browser
+vscode wxml
